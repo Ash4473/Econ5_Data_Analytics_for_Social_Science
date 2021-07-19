@@ -1,0 +1,238 @@
+\documentclass[11pt]{beamer}
+\mode<presentation>
+%\documentclass[handout,compress]{beamer}
+\usepackage{beamerthemedefault}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{bm} 
+\usepackage{tikz}
+\usepackage{listliketab}
+
+\usetheme{CambridgeUS}
+\makeatletter
+\makeatother
+\usetikzlibrary{shapes,backgrounds}
+\tikzstyle{cblue}=[circle, draw, thin,fill=cyan!20, scale=0.8]
+\tikzstyle{qgre}=[rectangle, draw, thin,fill=green!20, scale=0.8]
+\tikzstyle{rpath}=[ultra thick, red, opacity=0.4]
+\tikzstyle{legend_isps}=[rectangle, rounded corners, thin,
+fill=gray!20, text=blue, draw]
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{text/.default=}
+%\tikzset{text/.align=0}
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}$\bullet$}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\setbeamercovered{invisible} %% <--- I ADDED THIS
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\purple}{\textcolor{purple}}
+\newcommand{\brown}{\textcolor{brown}}
+\newcommand{\cyan}{\textcolor{cyan}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\y}{\ensuremath{\mathbf{y}}}
+\newcommand{\black}{\color{black}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\green}{\color{green}}
+\newcommand{\word}[1]{\green{\textit{#1}\ }\black}
+\newcommand{\lb}{\linebreak}
+\newtheorem{com}{Comment}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\setcounter{tocdepth}{1}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+
+\title[Class 8]{Introduction to Social Data Analytics \\
+	\bigskip Class 8}
+\author[]{}
+\institute[UCSD]{}
+\date{}
+
+% update title block above
+
+% to include in this lecture:
+%\texttt{\underline{br}owse}
+%Sometimes it's helpful to view our data to examine the structure. We can view our data with \texttt{\underline{br}owse} (try it!). \\ \pause \medskip
+%Also try: \texttt{br male female}
+% logical testing strings versus numeric, use d to check
+% missing values
+
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Today: Continue with Stata}
+By the end of today's lecture, you should be able to:
+\begin{itemize} \itemsep1em
+	\item Identify variable types and recall best practices when creating variables
+	\item Assign values to variables using functions and logical operators/statements
+	\item Sort data and assign values to variables by group designation 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Today's Structure}
+\begin{itemize} \itemsep1em
+	\item Load titanic.dta if you haven't already
+	\item Introduce new Stata commands and practice using them in the Command window
+	\item Work in pairs to finish class8.do that you started for the pre class exercise
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{String vs numeric variables}
+Last class we learned how to generate a numeric variable. Let's try generating a string variable:
+\begin{itemize}
+	\item \texttt{gen crew = "no"}
+	\item \texttt{replace crew = "yes" if class == 0} \pause \bigskip
+\end{itemize}
+Text strings must \textit{always} be bounded by quotes. \\ \pause \bigskip
+Use \texttt{desc} to check the storage type of each variable.
+\end{frame}
+
+\begin{frame}
+\frametitle{Some notes on naming variables}
+\begin{itemize} \itemsep1em
+\item No spaces allowed, case sensitive
+\item Up to 32 characters
+\item Rules of thumb
+\begin{itemize} \pause
+\item Keep it short, e.g. \textit{educ, income}
+\item Make it informative: e.g. \textit{female} instead of \textit{gender}
+\item Maintain consistency, e.g. \textit{ln\_income}, \textit{ln\_wage}, \textit{ln\_tax}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Command: \texttt{egen}}
+\texttt{egen} is like \texttt{gen}, but it's used for assigning values to variables with functions that work across all observations. Try:
+        \begin{center}
+            \texttt{\alert{gen} mean\_survive = mean(survive)} \\
+            \pause
+            \bigskip
+        \end{center}
+ The above fails to work. You must use \texttt{egen}:
+        \begin{center}
+            \texttt{\alert{egen} mean\_survive = mean(survive)}
+        \end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Generating variables by group}
+Suppose we want to calculate the mean survival rate by class. We can accomplish this using \texttt{sort}, \texttt{by}, and \texttt{egen}:
+\begin{itemize}
+	\item \texttt{sort class id}
+	\item \texttt{by class: egen mean\_survive\_class = mean(survive)}
+\end{itemize} \pause \bigskip
+\texttt{sort} orders the data from smallest to largest numerically or alphabetically (if string). If multiple variables are listed, the data are sorted lexicographically.  \\ \pause \bigskip
+\texttt{by class} tells the program to take the mean within each class separately. The data must be sorted to apply commands within designated groups. 
+\end{frame}
+
+\begin{frame}
+\frametitle{Commands: \texttt{if}, \texttt{in}, \& \texttt{\underline{l}ist}}
+\begin{itemize}
+	\item \texttt{if} restricts the command to certain criteria, \textit{for each observation}, similar to IF in Excel \pause
+	\item \texttt{in} restricts the observations to which a function applies. \pause
+	\item \texttt{list} displays observations for specified variables or all variables if unspecified.  
+\end{itemize} \medskip \pause
+Try it:
+\begin{itemize} 
+	\item[] \texttt{list in 1/200 if male == 0}
+	\item[] \texttt{list id survive in 1/100 if male == 1}
+\end{itemize} 
+\end{frame}
+
+\begin{frame}
+\frametitle{Commands: \texttt{keep} \& \texttt{drop}}
+Both of these commands are used to keep or drop (delete) observations or variables. Try the following:
+\begin{itemize}
+	\item \texttt{keep in 1/2000}
+	\item \texttt{drop in 1001/2000}
+	\item \texttt{keep id adult survive}
+	\item \texttt{drop adult}
+\end{itemize} \pause \bigskip
+Remember: these changes are made to the data in working memory. The original dataset (titanic.dta) remains unchanged unless you save it. \\ \pause \bigskip
+Go ahead and restore the data with: \texttt{use titanic, clear}
+\end{frame}
+
+\begin{frame}
+\frametitle{Logic in Stata}
+\begin{itemize}
+    \item \texttt{\&} means `AND' ; \texttt{$\vert$} means `OR' ; \texttt{!} means `NOT'
+	\item Use parenthesis when necessary. In Stata, \texttt{\&} takes precedence over \texttt{$\vert$}
+\end{itemize} \pause
+\begin{center}
+	\texttt{a $\vert$ b \& c} is \textbf{not} the same as \texttt{(a $\vert$ b) \& c} \\ \bigskip \pause
+	\texttt{a $\vert$ b \& c} \textbf{is} the same as \texttt{a $\vert$ (b \& c)}
+\end{center} \pause \bigskip
+Remember, use double equals signs to perform a logical test, \\ e.g. \texttt{list if id == 100} \\ \pause \bigskip
+Use single equals signs to assign values, e.g. \texttt{gen var = 100}
+\end{frame}
+
+%\begin{frame}
+%    \frametitle{Missing entries are a pain}
+%    \begin{itemize}
+%        \item There are 27 missing values in Stata
+%        \item These are all larger than any possible number in Stata
+%        \item The `smallest' missing value is $. < .a < \cdots < .z$
+%        \item Two ways to deal with missing:
+%            \begin{itemize}
+%                \item Somehow logically deal with them: list if price $<$ .
+%                \item Or: list if !missing(price)
+%            \end{itemize}
+%    \end{itemize}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Time to work on class8.do}
+Here are the commands/operators we covered today:
+		\begin{itemize}
+			\item \texttt{egen}
+			\item \texttt{if}
+			\item \texttt{in}
+			\item \texttt{list}
+			\item \texttt{keep}
+			\item \texttt{drop}
+			\item \texttt{\&, $\vert$, !}
+			\item \texttt{=} vs \texttt{==}
+		\end{itemize}
+\end{frame}
+\end{document}
+
+
+
+
+
+
+
+
+
