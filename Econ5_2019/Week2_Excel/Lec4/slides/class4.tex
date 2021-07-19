@@ -1,0 +1,264 @@
+\documentclass[11pt]{beamer}
+\mode<presentation>
+%\documentclass[handout,compress]{beamer}
+\usepackage{beamerthemedefault}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{bm} 
+\usepackage{tikz}
+\usepackage{listliketab}
+
+\usetheme{CambridgeUS}
+\makeatletter
+\makeatother
+\usetikzlibrary{shapes,backgrounds}
+\tikzstyle{cblue}=[circle, draw, thin,fill=cyan!20, scale=0.8]
+\tikzstyle{qgre}=[rectangle, draw, thin,fill=green!20, scale=0.8]
+\tikzstyle{rpath}=[ultra thick, red, opacity=0.4]
+\tikzstyle{legend_isps}=[rectangle, rounded corners, thin,
+                       fill=gray!20, text=blue, draw]
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{text/.default=}
+%\tikzset{text/.align=0}
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\setbeamertemplate{items}[default]
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}$\bullet$}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\setbeamercovered{invisible}
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\purple}{\textcolor{purple}}
+\newcommand{\brown}{\textcolor{brown}}
+\newcommand{\cyan}{\textcolor{cyan}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\y}{\ensuremath{\mathbf{y}}}
+\newcommand{\black}{\color{black}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\green}{\color{green}}
+\newcommand{\word}[1]{\green{\textit{#1}\ }\black}
+\newcommand{\lb}{\linebreak}
+\newtheorem{com}{Comment}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\setcounter{tocdepth}{1}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+
+
+\title[Class 4]{Introduction to Social Data Analytics \\
+\bigskip Class 4}
+\author[Kaushik]{Arushi Kaushik}
+\institute[UCSD]{arkaushi@ucsd.edu}
+\date{}
+
+% Update title block above
+% Add graphics using data from your section's survey. Be sure to explain what kind of variable each plot uses. 
+
+\begin{document}
+
+\frame{\titlepage}
+
+%\begin{frame}
+% \frametitle{Announcements}
+%\begin{itemize} \itemsep1em
+%\item Form teams of two for today
+%\end{itemize}
+%\end{frame}
+
+\begin{frame}
+ \frametitle{Today's Learning Objectives}
+ From Pre Class 4 Exercise: 
+ \begin{itemize}
+ 	\item resizing columns, pasting values, using MATCH and VLOOKUP
+\end{itemize} \pause
+\bigskip
+ After today, you should be able to:
+\begin{itemize}
+\item Classify kinds of variables (numerical, (un)ordered categorical, logical)
+\item Identify when a sample contains sampling bias and implications for external validity
+\item Use the RAND function to conduct a simple random sample
+\end{itemize} \pause \bigskip 
+Please download and open class4.xlsx if you haven't already.
+\end{frame}
+
+\begin{frame}
+ \frametitle{Kinds of Variables}
+\begin{itemize}
+\item \alert{Numerical} (Quantitative): Represented by a number \pause
+\item \alert{Categorical}: Data in categories
+\begin{itemize}
+\item Unordered: Unordered categories
+\item Ordinal: Ordered categories
+\end{itemize} \pause
+\item \alert{Logical}: True/False variables
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Which kinds of variables are the following:}
+\alert{Numerical, unordered categorical, ordered categorical, or logical}
+\begin{itemize}
+\pause
+\bigskip
+\item Rating of High, Medium, or Low of a student's confidence with Excel \pause
+\item Whether or not a student turned in an assignment on time \pause
+\item A student's score on an exam \pause
+\item A student's college at UCSD
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{What year are you?}
+ \begin{center}
+ \includegraphics[width = 0.5\textwidth]{Year} 
+  \includegraphics[width = 0.5\textwidth]{major} 
+ \end{center}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Check all software you've used before.}
+ \begin{center}
+ \includegraphics[width = 0.9\textwidth]{softwares} % use a graphic specific to your class
+ \end{center}
+\end{frame}
+
+\begin{frame}
+ \frametitle{The kind of variable depends on the question}
+Classify the following variables:
+\begin{itemize}
+\item Do you know how to use Excel? \pause
+\item On a scale from 1 to 10 how well do you know Excel? \pause
+\item Across sections, what \% have used Excel before? \pause
+\item Which software package do you know best?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{How can we learn from a sample?}
+ We are often interested in \alert{population} averages (e.g. poverty rates, election turnout, etc.), but polling the entire population is typically too costly. \\ \pause
+ \bigskip We settle for a \alert{sample} and use statistics instead. \\ \pause
+ \bigskip
+\uncover{How can we learn from a sample?}
+\begin{itemize}
+\item \alert{External validity}: when relationships found within the sample data apply to the population \pause
+\item To be externally valid, the sample must be \alert{representative} of the population \pause
+\begin{itemize}
+	\item One technique is \alert{simple random sampling} \pause
+	\item Difficult in practice - what happens when some of the population cannot be contacted (e.g. no phone or email)? \pause
+	\item Non-responses result in \alert{sampling bias}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Another kind of bias: \alert{response bias}}
+Often in surveys, respondents provide answers that do not wholly reflect the truth. \\ \bigskip \pause
+Consider how respondents might be inclined to provide biased answers to the following:
+\begin{itemize}
+	\item How often do you make racist comments? \pause (\alert{Social pressure} to answer a certain way) \pause
+	\item How much income do you earn per year? \pause (Too much effort to report exact income $\Rightarrow$ \alert{rounding}) \pause
+	\item How likely are you to recommend my company's product to a friend? \pause (Don't want to hurt surveyor's feelings)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Example: wages after graduation}
+Universities often ask alumni for information about their careers over time.
+\begin{itemize}
+\item What is the \alert{population} of interest?\pause
+\item What is the \alert{sample}?\pause
+\item Any concerns with phone or mail based surveys?\pause
+% \item What is the \alert{sampling frame}? \pause
+\item Why might the sample \textit{not} be representative (contain sampling bias)? \pause
+\item Why might the data contain response bias? 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{class4.xlsx}
+ \begin{center}
+	\includegraphics[width = \textwidth]{images/excel1.png} 
+\end{center}
+\begin{itemize}
+	\item What is the unit of analysis? \pause
+	\item Use the \alert{RAND()} function to assign a random number (column E) \pause
+	\item If the random number $>$ 0.5, they are selected for the random sample (column F) \pause
+	\item If the random number $>$ 0.5 but phone = ``N", they are NOT included in the random sample with sampling bias (column G) \pause
+	\item Determine the average reported salary amongst those selected (J3) and amongst those selected who answered their phones (J4). 
+\end{itemize}
+\end{frame}
+
+%\begin{frame}
+% \frametitle{General Tips}
+% \uncover{Tip 1: Cleaning is the hardest and most important step}
+%\begin{itemize}
+%\item \alert{Data cleaning}: preparing your data for analysis
+%\item What unit of analysis will you use?
+%\item How will you deal with \alert{missing values}?
+%\end{itemize}
+%\medskip\pause
+%
+%\uncover{Tip 2: Be cognizant of \alert{data types}}
+%\begin{itemize}
+%\item Numerical, string, factor, or logical?
+%\item Is the software treating each variable how you want it to?
+%\item Does the number represent a category or a true number? (e.g. income vs. income ranges)
+%\end{itemize}
+%\end{frame}
+%
+%\begin{frame}
+%\frametitle{More General Tips}
+%\uncover{Tip 3: Keep your raw data safe}
+%\begin{itemize}
+%	\item Work somewhere that won't overwrite your data
+%\end{itemize} \pause
+%\medskip
+%\uncover{Tip 4: Debug and check your work}
+%\begin{itemize}
+%	\item Google Search is your friend. Likely someone has already answered your question on StackExchange and the like.
+%	\item Break down tough problems into a sequence of smaller ones.
+%\end{itemize}
+%\end{frame}
+
+\begin{frame}
+ \frametitle{Next class}
+\begin{enumerate}
+\item We will be plotting in Excel.
+\item Submit your pre class exercise before class.
+\end{enumerate}
+\end{frame}
+
+\end{document}
+
+
+
+
+
+
+
+
+
