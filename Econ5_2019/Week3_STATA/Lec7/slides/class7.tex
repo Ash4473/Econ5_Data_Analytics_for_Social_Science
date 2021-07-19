@@ -1,0 +1,280 @@
+\documentclass[11pt]{beamer}
+\mode<presentation>
+%\documentclass[handout,compress]{beamer}
+\usepackage{beamerthemedefault}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{bm} 
+\usepackage{tikz}
+\usepackage{listliketab}
+\usepackage{verbatim}
+
+\usetheme{CambridgeUS}
+\makeatletter
+\makeatother
+\usetikzlibrary{shapes,backgrounds}
+\tikzstyle{cblue}=[circle, draw, thin,fill=cyan!20, scale=0.8]
+\tikzstyle{qgre}=[rectangle, draw, thin,fill=green!20, scale=0.8]
+\tikzstyle{rpath}=[ultra thick, red, opacity=0.4]
+\tikzstyle{legend_isps}=[rectangle, rounded corners, thin,
+                       fill=gray!20, text=blue, draw]
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{text/.default=}
+%\tikzset{text/.align=0}
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}$\bullet$}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\setbeamercovered{invisible} %% <--- I ADDED THIS
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\purple}{\textcolor{purple}}
+\newcommand{\brown}{\textcolor{brown}}
+\newcommand{\cyan}{\textcolor{cyan}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\y}{\ensuremath{\mathbf{y}}}
+\newcommand{\black}{\color{black}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\green}{\color{green}}
+\newcommand{\word}[1]{\green{\textit{#1}\ }\black}
+\newcommand{\lb}{\linebreak}
+\newtheorem{com}{Comment}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\setcounter{tocdepth}{1}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+
+\title[Class 7]{Introduction to Social Data Analytics \\
+	\bigskip Class 7}
+\author[Kaushik]{Arushi Kaushik}
+\institute[UCSD]{arkaushi@ucsd.edu}
+\date{}
+
+% update title block above
+
+\begin{document}
+
+\frame{\titlepage}
+
+%\begin{frame}
+% \frametitle{Housekeeping}
+%\begin{itemize} \itemsep1em
+%\item Did anyone have trouble submitting problem set 1?
+%\item Problem set 2 is posted and due in a week
+%\item Quiz 2 is due Wednesday at 9AM.
+%\end{itemize}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Today: Stata}
+By the end of today's lecture, you should be able to:
+\begin{itemize} \itemsep1em
+\item Create, edit, and save Do-files and log files
+\item Find more information on commands so you can teach yourself
+\item Load data and conduct some of the most common Stata commands
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Open your Do-file from the pre class 7 exercise}
+So far you should have three commands listed:
+\begin{itemize} \itemsep1em
+	\item \texttt{clear}
+	\item \texttt{import excel}
+	\item \texttt{summarize}
+\end{itemize} \pause \bigskip
+Add the new commands that we go over in class to your Do-file.
+\end{frame}
+
+\begin{frame}
+\frametitle{But first: why do we use Do-files?}
+...instead of typing everything in the Command window? \\ \pause \bigskip
+\alert{Reproducibility}. \pause \bigskip
+\begin{itemize} 
+	\item Anyone anywhere with the same data and Do-file can produce the same results. 
+	\item Big time savings when repeating analysis of similar data.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Command: \texttt{help}}
+Syntax: \texttt{help \textit{command}} \\ \medskip
+e.g. \texttt{help summarize}
+\begin{center}
+	\includegraphics[height = 0.75\textheight]{images/help.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Command: \texttt{cd} (change directory)}
+Syntax: \texttt{cd \textit{path}} \\ \medskip
+e.g. \texttt{cd "C:\textbackslash{}User\textbackslash{}Owner\textbackslash{}Documents\textbackslash{}Econ 5\textbackslash{}Class 7"} \bigskip \pause
+\begin{itemize} 
+	\item Put this at the beginning of your Do-file 
+	\item Change your directory to wherever you want to access and save files
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Command: \texttt{log}}
+Syntax: \texttt{log using \textit{filename}, [\textit{options}]} \\ \medskip
+e.g. \texttt{log using logfile.txt, text replace} \bigskip \pause
+\begin{itemize} \itemsep1em
+	\item The log file will record your session - everything you type and the output \pause
+	\item This is useful for:
+	\begin{itemize}
+		\item Tracking what you do
+		\item Viewing particularly long output
+		\item Sending output to collaborators \pause
+	\end{itemize}
+	\item At the end of the Do-file, you can stop logging by adding the command \texttt{log close}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Commands: \texttt{\underline{d}escribe}, \texttt{\underline{su}mmarize}}
+These commands provide information about variables.
+\begin{itemize} \itemsep1em
+	\item \texttt{desc}: provides a summary of all variables in memory 
+	\item \texttt{sum}: produces summary statistics of all variables in memory
+\end{itemize} \pause \bigskip
+You can use these commands for specific variables instead of every variable in memory. Try:
+\begin{itemize} 
+	\item \texttt{desc id}
+	\item \texttt{sum class adult}
+	\item \texttt{sum id - adult survive}
+\end{itemize} \pause
+What percent of Titanic passengers survived?
+\end{frame}
+
+\begin{frame}
+\frametitle{Command: \texttt{\underline{tab}ulate}}
+Syntax: \texttt{tab \textit{varlist}} \\ \medskip
+This command determines the frequency that a variable takes each value. \pause Which of the following variable types is \texttt{tab} useful for?
+\begin{itemize}
+	\item numerical
+	\item categorical
+	\item logical
+\end{itemize} \pause \bigskip
+Try the following:
+\begin{itemize}
+	\item \texttt{tab male}
+	\item \texttt{tab male survive}
+	\item \texttt{tab male survive, row}	
+\end{itemize} \pause \bigskip
+Were men or women more likely to survive the sinking of the Titanic?
+\end{frame}
+
+\begin{frame}
+\frametitle{Command: \texttt{set more off}}
+Suppose you run a command that produces very long output, like \texttt{tab id} (try it!). This command enables you to view all output without having to press enter repeatedly. \\ \pause \bigskip
+You can make this change permanent with \texttt{set more off, permanent}
+\end{frame}
+
+\begin{frame}
+\frametitle{Commands: \texttt{\underline{g}enerate}, \texttt{replace}}
+Syntax: \texttt{gen \textit{newvar} = \textit{exp}} \\ \medskip
+Syntax: \texttt{replace \textit{oldvar} = \textit{exp}} \\ \bigskip
+These commands are used to create variables. \pause Try it:
+\begin{itemize}
+	\item \texttt{gen notmale = 0}
+	\item \texttt{replace notmale = 1 if male == 0}
+\end{itemize} \bigskip \pause
+Notice the single versus double equals signs. 
+\begin{itemize}
+	\item \texttt{=} assigns values to a variable
+	\item \texttt{==} tests if a variable takes certain values (a logical test)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Commands: \texttt{\underline{ren}ame}, \texttt{\underline{la}bel \underline{var}iable}}
+Syntax: \texttt{rename \textit{old\_varname} \textit{new\_varname}} \\ \medskip
+\pause Rename the variable \texttt{notmale} as \texttt{female}:
+\begin{itemize}
+	\item \texttt{rename notmale female}
+\end{itemize} \bigskip \bigskip \pause
+
+Labeling variables is useful when the name of the variable doesn't fully communicate what the variable represents. \\ \medskip
+Syntax: \texttt{label variable \textit{varname} \textit{"label"}} \\ \pause \medskip
+Try it:
+\begin{itemize}
+	\item \texttt{label var female "0 if male, 1 otherwise"}
+\end{itemize} \bigskip \bigskip \pause
+\end{frame}
+
+\begin{frame}
+\frametitle{Commands: \texttt{save}, \texttt{use}}
+Stata has its own data file type (.dta). We save and load data in this format with these commands. \pause Try:
+\begin{itemize}
+	\item \texttt{save titanic, replace}
+	\item \texttt{use titanic, clear}
+\end{itemize} \bigskip \pause
+\texttt{replace} is necessary to overwrite existing files. \pause \\ \bigskip
+\texttt{clear} is necessary to load new data when existing data is present. 
+\end{frame}
+
+\begin{frame}
+\frametitle{Commands introduced in this class:}
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+		\begin{itemize}
+			\item \texttt{clear}
+			\item \texttt{import excel}
+			\item \texttt{help}
+			\item \texttt{cd}
+			\item \texttt{log using \textit{filename.txt}, text replace}
+			\item \texttt{log close}
+			\item \texttt{describe}
+			\item \texttt{summarize}
+		\end{itemize}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+		\begin{itemize}
+			\item \texttt{tabulate}
+			\item \texttt{set more off}
+			\item \texttt{generate}
+			\item \texttt{replace}
+			\item \texttt{rename}
+			\item \texttt{label variable}
+			\item \texttt{save  \textit{filename}, replace}
+			\item \texttt{use \textit{filename}, clear}
+		\end{itemize}
+	\end{column}
+\end{columns}
+\end{frame}
+
+\end{document}
+
+
+
+
+
+
+
+
+
