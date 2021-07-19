@@ -1,0 +1,26 @@
+\frametitle{Here are the commands/operators we covered today:}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{\textless{}-}
+\item
+  \texttt{c()}
+\item
+  \texttt{vector{[}{]}}
+\item
+  \texttt{length(),\ min(),\ max(),\ range(),\ mean(),\ sum()}
+\item
+  \texttt{head(),\ tail()}
+\item
+  \texttt{setwd(),\ getwd()}
+\item
+  \texttt{read.csv(),\ load()}
+\item
+  \texttt{names(),\ nrow(),\ ncol(),\ dim(),\ summary()}
+\item
+  \texttt{write.csv(),\ save()}
+\item
+  \texttt{\$}
+\end{itemize}
+
