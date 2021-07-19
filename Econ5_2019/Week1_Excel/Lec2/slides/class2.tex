@@ -1,0 +1,359 @@
+\documentclass[11pt]{beamer}
+\mode<presentation>
+%\documentclass[handout,compress]{beamer}
+\usepackage{beamerthemedefault}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{bm} 
+\usepackage{tikz}
+\usepackage{listliketab}
+
+\usetheme{CambridgeUS}
+\makeatletter
+\makeatother
+\usetikzlibrary{shapes,backgrounds}
+\tikzstyle{cblue}=[circle, draw, thin,fill=cyan!20, scale=0.8]
+\tikzstyle{qgre}=[rectangle, draw, thin,fill=green!20, scale=0.8]
+\tikzstyle{rpath}=[ultra thick, red, opacity=0.4]
+\tikzstyle{legend_isps}=[rectangle, rounded corners, thin,
+                       fill=gray!20, text=blue, draw]
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{text/.default=}
+%\tikzset{text/.align=0}
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}$\bullet$}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\setbeamercovered{invisible} 
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\purple}{\textcolor{purple}}
+\newcommand{\brown}{\textcolor{brown}}
+\newcommand{\cyan}{\textcolor{cyan}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\y}{\ensuremath{\mathbf{y}}}
+\newcommand{\black}{\color{black}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\green}{\color{green}}
+\newcommand{\word}[1]{\green{\textit{#1}\ }\black}
+\newcommand{\lb}{\linebreak}
+\newtheorem{com}{Comment}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+%!TEX encoding = UTF-8 Unicode\setcounter{tocdepth}{1}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+
+\title[Class 2]{Introduction to Social Data Analytics \\
+\bigskip Class 2}
+\author[Kaushik]{Arushi Kaushik}
+\institute[UCSD]{Department of Economics\\ UCSD}
+\date{4th April, 2019}
+
+% Update information in title block above
+% Warm up slide is optional. I've found it helpful to remind students to include the course in the subject of their emails, which allows me to use Gmail filters to keep my inbox organized. 
+% 
+
+\begin{document}
+
+\frame{\titlepage}
+
+%\begin{frame}
+%\frametitle{Warm-up: email ettiquette}
+%\begin{center}
+%\includegraphics[scale=0.6]{images/email.png}
+%\end{center}
+%\end{frame}
+
+\begin{frame}
+ \frametitle{Today's Learning Objectives}
+ From Exercise 1: 
+ \begin{itemize}
+ 	\item Open Excel, save workbook, edit cells, autofill down column, apply filter, sort columns
+\end{itemize} \pause
+\bigskip
+ After today, you should be able to:
+\begin{itemize}
+	\item Identify observations and variables in an Excel workbook
+	\item Discern the unit of analysis in a data table and demonstrate how to change it
+	\item Implement statistical and logical functions in Excel
+	\item Understand basic Boolean logic and use logical operators
+\end{itemize} \pause \bigskip
+Please download and open class2.xlsx if you haven't already.
+\end{frame}
+
+\begin{frame}
+\frametitle{Observations $*$ Variables = Data Table}
+\begin{center}
+\includegraphics[scale=.5]{images/table}
+\end{center}
+\begin{itemize}\pause
+\item What does each column represent?\pause
+\item What does each row represent? 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{The Unit of Analysis}
+\begin{itemize}
+	\item The ``case'' of the data set, each \alert{row} 
+	\item The things to be compared, e.g. people or cities. \pause
+	\item \alert{Each data table contains a consistent unit of analysis} \pause
+	\begin{itemize}
+		\item Usually have a unique ID for each unit 
+		\item Similar variables can be collected on each unit
+	\end{itemize} \pause
+	\item Units may have a time dimension \pause
+	\begin{itemize}
+		\item For example, monthly household surveys are recorded at the household-month level, so each unit is a household-month.
+		\item \alert{Longitudinal} or \alert{panel data}: observe the same sample over different points in time
+	\end{itemize} \pause \bigskip
+	\item What is the unit of analysis in class2.xlsx? 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Changing the unit of analysis}
+\uncover{A research project might examine many data tables with different \alert{units of analysis}}, for example:
+\begin{enumerate}
+\item[1.] A data table with each \alert{student-term} (most granular)
+\item[2.] A data table with each \alert{student}
+\item[3.] A data table with each \alert{school}
+\item[4.] A data table with each \alert{city} (most coarse)
+\end{enumerate}\pause
+\bigskip
+\uncover{One can coarsen the unit of analysis by taking averages or counts} \pause
+\begin{itemize}
+	\item We'll do this in our Excel table after we learn about functions.
+%\item Start with grades for every student in many schools
+%\item Find the average grade within each school
+%\item Unit of analysis changed from \alert{student} to \alert{school} 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{What is a function?}
+ \begin{center}
+ \includegraphics[scale=.5]{images/sum}
+ \end{center}
+ \begin{itemize}
+ \item An object that takes inputs and produces outputs \pause
+ \item What are the inputs in this example? \pause
+ \item What will the output be? \pause
+ \item Notice the equals sign and the text underneath the function.
+ \end{itemize}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Types of functions}
+\begin{itemize}
+\item \alert{Statistical}: 
+\begin{itemize}
+\item \alert{input}: is usually a set of numbers
+\item \alert{output}: is usually a mathematical function of these numbers
+\end{itemize} \pause \bigskip
+\item \alert{Logical:} 
+\begin{itemize}
+\item \alert{input} is usually a TRUE/FALSE statement
+\item \alert{output} is either TRUE/FALSE, or what to do if it's TRUE
+\end{itemize} \pause \bigskip 
+\item \alert{Lookup}: 
+\begin{itemize}
+	\item We'll learn about these in our next short exercise. 
+\end{itemize} 
+\end{itemize} 
+\end{frame}
+
+\begin{frame}
+ \frametitle{Statistical Functions in Excel}
+\begin{itemize}
+\item \alert{COUNT}
+%\begin{itemize}
+%\item \alert{input}: a set of numbers
+%\item \alert{output}: how many are numbers?
+%\end{itemize}
+\item \alert{SUM}
+%\begin{itemize}
+%\item \alert{input}: a set of numbers
+%\item \alert{output}: sum of numbers 
+%\end{itemize}
+\item \alert{AVERAGE}
+%\begin{itemize}
+%\item \alert{input}: a set of numbers
+%\item \alert{output}: sum of numbers divided by N
+%\end{itemize}
+\item \alert{MEDIAN}
+%\begin{itemize}
+%\item \alert{input}: a set of numbers
+%\item \alert{output}: mid-point of these numbers
+%\end{itemize}
+\item \alert{MAX, MIN}
+%\begin{itemize}
+%\item \alert{input}: a set of numbers
+%\item \alert{output}: minimum. maximum
+%\end{itemize}
+\item \alert{MODE}
+%\begin{itemize}
+%\item \alert{input}: a set of numbers
+%\item \alert{output}: most common number
+%\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+ \frametitle{Statistical Functions in Excel}
+\includegraphics[scale=0.50]{images/statistical.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+ \frametitle{Statistical Functions in Excel}
+\includegraphics[scale=0.5]{images/statisticalans.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+ \frametitle{Boolean Logic}
+\begin{center}
+\includegraphics[scale=.2]{images/boole.png}
+\end{center}
+\begin{itemize}
+% \item \alert{``forefather of the information age"}
+\item A \alert{statement} can be \alert{TRUE} or \alert{FALSE}
+\item Use these to form other statements using:
+\begin{itemize}
+\item \alert{AND} 
+\item \alert{OR}
+\item \alert{NOT}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+ \frametitle{Boolean Logic in Excel}
+\includegraphics[scale=0.30]{images/and.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+ \frametitle{Notice the arguments listed underneath the function}
+\includegraphics[scale=0.30]{images/andaside.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+ \frametitle{Boolean Logic in Excel}
+\includegraphics[scale=0.30]{images/or.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+ \frametitle{Boolean Logic in Excel}
+\includegraphics[scale=0.30]{images/andor.png}
+\end{center}
+\end{frame}
+
+%\begin{frame}
+%\begin{center}
+% \frametitle{Boolean Logic in Excel}
+%\includegraphics[scale=0.30]{images/not.png}
+%\end{center}
+%\end{frame}
+%
+%\begin{frame}
+%\begin{center}
+% \frametitle{Boolean Logic in Excel}
+%\includegraphics[scale=0.30]{images/notans.png}
+%\end{center}
+%\end{frame}
+
+\begin{frame}
+ \frametitle{IF statements in Excel}
+=IF(logical\_statement, [value\_if\_true], [value\_if\_false]) \\
+\bigskip
+If the logical statement is TRUE, do one thing \\
+If the logical statement is FALSE, do another thing \\
+\bigskip
+e.g. =IF(A1=B1, 1, 0)
+\end{frame}
+
+\begin{frame}
+ \frametitle{If Statements and Statistics}
+\uncover{We can combine if statements and statistical functions!}
+\begin{itemize}
+\item \alert{AVERAGEIF}: 
+\begin{itemize}
+\item \alert{input}: a set of numbers
+\item \alert{output}: the average \alert{only} for numbers that satisfy the condition
+\end{itemize}\pause
+\item \alert{AVERAGEIFS}: 
+\begin{itemize}
+\item \alert{input}: a set of numbers
+\item \alert{output}: the average \alert{only} for numbers that satisfy \alert{multiple} conditions
+\end{itemize}\pause
+\item Same with \alert{SUMIF}, \alert{SUMIFS}, \alert{COUNTIF}, \alert{COUNTIFS}.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Change unit of analysis using functions}
+\begin{center}
+	\includegraphics[scale=.45]{images/averageif}
+\end{center}
+\begin{itemize}
+	\item How can we coarsen the unit of analysis from `student-term' to `student'? \pause
+	\item Use \alert{AVERAGEIF}(range, criteria, average\_range). \pause
+	\item Try coarsening to the `school' and `city' units of analysis
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Next class}
+\begin{itemize} \itemsep1em
+\item[] Friday we will practice using these functions. 
+\item[] See you then!
+\end{itemize}
+\end{frame}
+
+
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
