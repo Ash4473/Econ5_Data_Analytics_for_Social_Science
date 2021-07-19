@@ -1,0 +1,18 @@
+\frametitle{Here are the commands/operators we covered today:}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{\&,\ \textbar{},\ !,\ ==}
+\item
+  \texttt{:,\ seq()}
+\item
+  \texttt{class(),\ typeof()}
+\item
+  \texttt{as.numeric(),\ as.character()}
+\item
+  \texttt{is.numeric(),\ is.character(),\ isTRUE()}
+\item
+  \texttt{subset()}
+\end{itemize}
+
