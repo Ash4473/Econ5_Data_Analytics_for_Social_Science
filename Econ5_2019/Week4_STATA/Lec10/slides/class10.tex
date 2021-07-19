@@ -1,0 +1,273 @@
+\documentclass[11pt]{beamer}
+\mode<presentation>
+%\documentclass[handout,compress]{beamer}
+\usepackage{beamerthemedefault}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{bm} 
+\usepackage{tikz}
+\usepackage{listliketab}
+
+\usetheme{CambridgeUS}
+\makeatletter
+\makeatother
+\usetikzlibrary{shapes,backgrounds}
+\tikzstyle{cblue}=[circle, draw, thin,fill=cyan!20, scale=0.8]
+\tikzstyle{qgre}=[rectangle, draw, thin,fill=green!20, scale=0.8]
+\tikzstyle{rpath}=[ultra thick, red, opacity=0.4]
+\tikzstyle{legend_isps}=[rectangle, rounded corners, thin,
+fill=gray!20, text=blue, draw]
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{text/.default=}
+%\tikzset{text/.align=0}
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}$\bullet$}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\setbeamercovered{invisible} %% <--- I ADDED THIS
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\purple}{\textcolor{purple}}
+\newcommand{\brown}{\textcolor{brown}}
+\newcommand{\cyan}{\textcolor{cyan}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\y}{\ensuremath{\mathbf{y}}}
+\newcommand{\black}{\color{black}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\green}{\color{green}}
+\newcommand{\word}[1]{\green{\textit{#1}\ }\black}
+\newcommand{\lb}{\linebreak}
+\newtheorem{com}{Comment}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\setcounter{tocdepth}{1}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+
+\title[Class 10]{Introduction to Social Data Analytics \\
+	\bigskip Class 10}
+\author[Kaushik]{Arushi Kaushik}
+\institute[UCSD]{arkaushi@ucsd.edu}
+\date{23rd April 2019}
+
+% update title block above
+
+\begin{document}
+
+\frame{\titlepage}
+
+%\begin{frame}
+%    \frametitle{Housekeeping}
+%    \begin{itemize} \itemsep1em
+%    \item Problem Set 2 due this morning
+%    \item Quiz 3 due this Wednesday (9AM)
+%    \item Stata plotting today, regression Wednesday
+%    \item Review for midterm next week on Monday
+%    \end{itemize}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Today: Plotting in Stata}
+By the end of today's lecture, you should be able to:
+\begin{itemize} \itemsep1em
+	\item Create the following plots in Stata: scatter, line, bar, box, histogram
+	\item Add elements to plots: titles, legends, fitted-lines, etc.
+	\item Interpret elements of plots after creating them (e.g. quartiles in box plots)
+	\item Demonstrate how to overlay multiple plots
+\end{itemize} \bigskip
+Open class10.do if you haven't already. 
+\end{frame}
+
+\begin{frame}
+    \frametitle{Why do we present data visually?}
+    \begin{itemize}
+        \item The purpose of plotting is to demonstrate relationships between variables in your data. \pause
+        \item Visual evidence is often more convincing than summary statistics by themselves.
+    \end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Why do we present data visually?}
+    \begin{center}
+    \includegraphics[scale=0.4]{chetty.png}
+    \end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Plotting syntax}
+The general syntax is always:
+\begin{itemize}
+        \item[] \texttt{graph twoway \textit{plottype varlist}, [\textit{options}]} 
+\end{itemize} \bigskip
+For example, you can create a scatter plot with:
+\begin{itemize}
+		\item[] \texttt{graph twoway scatter y x}
+\end{itemize} \bigskip \pause
+There are \textit{a lot} of different graphs to choose from in Stata. \\ \medskip
+You don't always need \texttt{graph twoway} unless you are presenting different types of graphs on the same plot, but you \textit{always} need the graph type.
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Some plot types}
+Today will we cover the following plot types (though there are several others):
+\begin{itemize}
+        \item line
+        \item scatter
+        \item histogram
+        \item bar
+        \item box
+\end{itemize} 
+\end{frame}
+
+\begin{frame}
+\frametitle{Line and Scatter Plots}
+Syntax: \texttt{graph twoway line y1 [y2] [y3] ... x, [\textit{options}]}
+\begin{itemize}
+	\item Use \texttt{line} to show the change in a variable (y) over time (x)
+	\item Use \texttt{scatter} to show the relationship between two variables where the points are not ordered (e.g. not ordered by time)
+\end{itemize} \bigskip \pause
+Some helpful options:
+\begin{itemize}
+	\item \texttt{lcolor(\textit{color})} 
+	\item \texttt{legend(order(1 "Label 1" 2 "Label 2" ...)) }
+\end{itemize} \bigskip \pause
+Try it:
+\begin{itemize}
+	\item[] \texttt{sysuse uslifeexp, clear}
+	\item[] \texttt{graph twoway line le\_male le\_female year, /// \\
+		lcolor(red blue) legend(order(1 "Men" 2 "Women"))}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Options that apply to all plots}
+The order of options doesn't matter, but they all come after the comma:
+\begin{itemize}
+	\item \texttt{title("text")}
+	\item \texttt{xtitle("text")}
+	\item \texttt{ytitle("text")}
+	\item \texttt{name(\textit{plotname}, replace)}
+\end{itemize} \pause \bigskip
+Try adding titles and names to your line plot:
+\begin{itemize}
+	\item[] \texttt{graph twoway line le\_male le\_female year\alert{,} /// \\
+					lcolor(red blue) legend(order(1 "Men" 2 "Women")) /// \\
+					\alert{title}("Life Expectancy for Men	vs Women") /// \\
+					\alert{xtitle}("Year") /// \\
+					\alert{ytitle}("Life Expectancy") /// \\
+					\alert{name}(lifeexpmw, replace)}
+\end{itemize}
+\end{frame} 
+
+\begin{frame}
+\frametitle{Histograms}
+Syntax: \texttt{histogram x}
+\begin{itemize}
+        \item Recall from Class 5: histograms display the distribution of the data
+        \item Histograms require only one variable (the y-axis is the frequency)
+\end{itemize} \bigskip \pause
+Some helpful options:
+\begin{itemize}
+	\item \texttt{bin(\# of bins)} 
+	\item \texttt{width(size)}
+	\item \texttt{frequency}
+	\item \texttt{kdensity}
+\end{itemize} \bigskip \pause
+Try it:
+\begin{itemize}
+	\item[] \texttt{sysuse citytemp, clear}
+	\item[] \texttt{histogram tempjan, width(5) frequency kdensity}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Bar Plots}
+Syntax: \texttt{graph bar (function) x1 [x2]..., [over(\textit{varname})}] \\ \medskip
+Example: \texttt{graph bar (mean) tempjan tempjul, over(region)} \bigskip
+\begin{itemize}
+	\item This creates a barplot depicting the mean temperatures in January and July by region
+	\item \texttt{function} can be mean, median, sum, count, percent, etc.
+\end{itemize} \bigskip \pause
+Some helpful options:
+\begin{itemize}
+	\item \texttt{bar(1, color(\textit{color1})), bar(2, color(\textit{color2}))}
+\end{itemize} \bigskip \pause
+Try it:
+\begin{itemize}
+	\item[] \texttt{graph bar (mean) tempjan tempjul, over(region) /// \\
+					legend(order(1 "January" 2 "July")) /// \\
+					bar(1, color(green)) bar(2, color(purple)) }
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Box Plots}
+Syntax: \texttt{graph box x1 [x2]..., [over(\textit{varname})}] \\ \medskip
+\begin{itemize}
+        \item Box plots describe statistical properties of data
+        \item Usually used to compare across different groups \pause
+        \item Definition: \textit{quartile} - what is it? \pause
+        \item The line inside of the box is the median; the line at the top of the box is the third quartile, the line at the bottom of the box is the first quartile
+        \item The \textit{interquartile range} (IQR) is: IQR =  Q3 - Q1 \pause
+\end{itemize} \bigskip
+Try it:
+\begin{itemize}
+	\item[] \texttt{graph box tempjan tempjul, over(region) /// \\
+		legend(order(1 "January" 2 "July")) /// \\
+		box(1, color(green)) box(2, color(purple)) }
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Finish up class10.do in your small groups.}
+Here are the commands/operators we covered today:
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+		\begin{itemize}
+			\item \texttt{graph twoway line}
+			\item \texttt{graph twoway scatter}
+			\item \texttt{histogram}
+			\item \texttt{graph bar}
+			\item \texttt{graph box}
+		\end{itemize}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+		\begin{itemize}
+			\item \texttt{title, xtitle, ytitle}
+			\item \texttt{name}
+			\item \texttt{legend(order(1 "label1" 2 "label2"))}
+			\item \texttt{lcolor}
+			\item \texttt{bin, width, frequency, kdensity}	
+			\item \texttt{bar(1, color(color))}	
+			\item \texttt{box(1, color(color))}	
+		\end{itemize}
+	\end{column}
+\end{columns}
+\end{frame}
+
+\end{document}

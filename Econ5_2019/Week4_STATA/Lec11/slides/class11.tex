@@ -1,0 +1,284 @@
+\documentclass[11pt]{beamer}
+\mode<presentation>
+%\documentclass[handout,compress]{beamer}
+\usepackage{beamerthemedefault}
+\usepackage{graphicx}
+\usepackage{tcolorbox}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{bm} 
+\usepackage{tikz}
+\usepackage{listliketab}
+\usepackage{tabto}
+
+\usetheme{CambridgeUS}
+\makeatletter
+\makeatother
+\usetikzlibrary{shapes,backgrounds}
+\tikzstyle{cblue}=[circle, draw, thin,fill=cyan!20, scale=0.8]
+\tikzstyle{qgre}=[rectangle, draw, thin,fill=green!20, scale=0.8]
+\tikzstyle{rpath}=[ultra thick, red, opacity=0.4]
+\tikzstyle{legend_isps}=[rectangle, rounded corners, thin,
+fill=gray!20, text=blue, draw]
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{text/.default=}
+%\tikzset{text/.align=0}
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}$\bullet$}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\setbeamercovered{invisible} %% <--- I ADDED THIS
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\orange}{\textcolor{orange}}
+\newcommand{\purple}{\textcolor{violet}}
+\newcommand{\brown}{\textcolor{brown}}
+\newcommand{\cyan}{\textcolor{cyan}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\y}{\ensuremath{\mathbf{y}}}
+\newcommand{\black}{\color{black}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\definecolor{ao}{rgb}{.635, .766, .365}
+\newcommand{\greenn}{\textcolor{ao}}
+\newcommand{\word}[1]{\green{\textit{#1}\ }\black}
+\newcommand{\lb}{\linebreak}
+\newtheorem{com}{Comment}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\setcounter{tocdepth}{1}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+
+\title[Class 11]{Introduction to Social Data Analytics \\
+	\bigskip Class 11}
+\author[]{}
+\institute[UCSD]{}
+\date{}
+
+% update title block above
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Today: Regression in Stata}
+By the end of today's lecture, you should be able to:
+\begin{itemize} \itemsep1em
+	\item Conduct basic regression analysis in Stata using \texttt{reg}
+	\item Explain why one must be careful with linear form assumptions and out of sample extrapolation
+	\item Distinguish causal effects from correlations between variables, and describe how naive regression is useful 
+	\item Analyze regression results and interpret key elements such as coefficient estimates and variance
+	\item Construct a best fit line in a scatterplot and identify the slope, intercept, and residuals
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Suppose we want to know how Y varies with X in a population.}
+We might \alert{model} the outcome, Y, as a function of the predictor, X: \\
+$$Y_i = f(X_i)$$ \\ \bigskip
+If we assume the relationship is \alert{linear}, we can write our model as: \\
+$$Y_i = \beta_0 + \beta_1X_i + \varepsilon_i $$ \\ \bigskip
+Our job is to \alert{estimate} $\beta_0$ and $\beta_1$ using data. 
+\end{frame}
+
+\begin{frame}
+\frametitle{Let's break down the linear model.}
+$$Y_i = \greenn{\beta_0} + \red{\beta_1}X_i + \orange{\varepsilon_i} $$ 
+\begin{center}
+	Y-value = \greenn{Intercept} + \red{Slope} * X-value + \orange{error} \\ \bigskip
+	\includegraphics[height = 0.5\textheight]{images/largescatter.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{We use `hats' to denote coefficient estimates.}
+$$Y_i = \beta_0 + \beta_1X_i + \varepsilon_i $$ \\ \bigskip
+Often we don't have data for the entire population, so we cannot calculate the exact population parameters $\beta_0$ and $\beta_1$. \\ \bigskip \pause
+Instead, we use a representative sample to \alert{estimate} them: \\ \bigskip
+\begin{center}
+	$\hat{\beta}_0$: estimate of the intercept, $\beta_0$  \\
+	$\hat{\beta}_1$: estimate of the coefficient, $\beta_1$  
+\end{center} \pause \bigskip
+$\hat{\beta}_0$ and $\hat{\beta}_1$ are the parameter estimates that \alert{best fit} the sample data. 
+\end{frame}
+
+\begin{frame}
+\frametitle{How do we estimate $\beta_0$ and $\beta_1$?}
+Primary tool: \alert{Ordinary Least Squares (OLS)} \\ \bigskip
+Choose $\hat{\beta}_0$ and $\hat{\beta}_1$ that minimize the sum of $\varepsilon_i^2$. 
+\begin{center}
+	\includegraphics[height = 0.5\textheight]{images/bestfit.png}
+\end{center} \pause
+Computing $\hat{\beta}_0$ and $\hat{\beta}_1$ manually can take a very long time...but regression in Stata takes only a few seconds!
+\end{frame}
+
+\begin{frame}
+\frametitle{We might ask...}
+\begin{center}
+	\includegraphics[height = 0.8\textheight]{images/nbadata2.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Scatter plot of the data}
+\begin{center}
+	\includegraphics[height = 0.8\textheight]{images/nbascatter.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Regression \textit{can} tell us...}
+\begin{center}
+	\includegraphics[height = 0.8\textheight]{images/regression1.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Linear regression allows us to construct a line of best fit}
+\begin{center}
+	\includegraphics[height = 0.8\textheight]{images/regression2.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{How do we interpret the \alert{slope} estimate, $\hat{\beta}_1$?}
+\begin{tcolorbox}[]
+ 	[\purple{Y}] changes by [\red{$\hat{\beta}_1$}] [\purple{Y} units] for every one [\cyan{X} unit] increase in [\cyan{X}]... 
+ 	\begin{flushright}
+ 		...\textit{on average, all else equal.}
+ 	\end{flushright}
+\end{tcolorbox}
+In our NBA example:
+\begin{itemize}
+	\item \red{$\hat{\beta}_1$} = 0.108
+	\item \purple{Y} = ``number of blocks per game"
+	\item \cyan{X} = ``height in inches"
+\end{itemize}  \pause \bigskip
+``\purple{An NBA player's blocks per game} increases by \red{0.108} \purple{blocks} for every one \cyan{inch} increase in \cyan{height} on average, all else equal."
+\end{frame}
+
+\begin{frame}
+\frametitle{How do we interpret the \alert{intercept} estimate, $\hat{\beta}_0$?}
+\begin{tcolorbox}[]
+	When [\cyan{X}] is zero [\cyan{X} units],  [\purple{Y}] is [\greenn{$\hat{\beta}_0$}] [\purple{Y} units]... 
+	\begin{flushright}
+		...\textit{on average, all else equal.}
+	\end{flushright}
+\end{tcolorbox}
+In our NBA example:
+\begin{itemize}
+	\item \greenn{$\hat{\beta}_0$} = -7.734
+	\item \purple{Y} = ``number of blocks per game"
+	\item \cyan{X} = ``height in inches"
+\end{itemize}  \pause \bigskip
+``When \cyan{an NBA player's height} is zero \cyan{inches}, his \purple{blocks per game} is \greenn{-7.734} \purple{blocks} on average, all else equal."
+\end{frame}
+
+\begin{frame}
+\frametitle{If Tony Parker is 74" tall, what is his predicted blocks/game?}
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+		\includegraphics[width = \textwidth]{images/tonyparker.png}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+		$\hat{Y_i} = \greenn{-7.734} + \red{0.108}X_i $ \pause \\
+		$\hat{Y_i} = \greenn{-7.734} + \red{0.108}(74) = 0.258 $ \\ \pause \bigskip
+		If his actual blocks/game average was 0.1, what's the model error (residual)? \\ \pause \bigskip
+		$\orange{Error_i} = Actual_i - Predicted_i$ \\ 
+		$\orange{\varepsilon_i} = Y_i - \hat{Y_i}$ \\ \pause
+		$\orange{\varepsilon_i} = 0.1 - 0.258 = -0.158$
+	\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}
+\frametitle{A cautionary tale: out-of-sample extrapolation}
+\begin{center}
+	\includegraphics[height = 0.8\textheight]{images/extrapolate.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Can we (accurately) do the following with our model:}
+\begin{itemize}
+	\item Predict blocks for an NBA player 68 inches in height or shorter? \pause
+	\item[] \tabto{1cm} No, 68 inches is outside the domain of our data. \pause
+	\item[]
+	\item Predict blocks for a \textit{college} basketball player of 75 inches? \pause
+	\item[] \tabto{1cm} No, our results are valid only for NBA players. \pause
+	\item[]
+	\item Predict how many blocks an NBA player would get if he wore shoes that raised his height by 5 inches? \pause
+	\item[] \tabto{1cm} No, our model estimates apply only to \textit{natural} height.
+\end{itemize} \bigskip \pause
+\begin{center}
+	Be careful with \alert{extrapolation} and \alert{external validity}!
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Open class11.do in Stata}
+\begin{center}
+	\includegraphics[width = 0.85\textwidth]{images/stata1.png}
+\end{center}
+\begin{itemize} \pause
+	\item What does the Coef. tell us?
+	\item What does the Std. Err. tell us?
+	\item Are the coefficients statistically significant? Are they economically significant?
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Generating predicted values}
+\texttt{predict yhat \\ scatter yhat height}
+\begin{center}
+	\includegraphics[width = 0.6\textwidth]{images/stata2.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{Generating residuals}
+\texttt{predict resid, residuals \\ histogram resid, width(0.1) frequency normal}
+\begin{center}
+	\includegraphics[width = 0.6\textwidth]{images/stata3.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{A bonus cautionary tale: Anscombe's Quartet}
+\begin{center}
+	\includegraphics[height = 0.85\textheight]{images/anscombe1.png}
+\end{center}
+\end{frame}
+
+\begin{frame}
+\frametitle{A bonus cautionary tale: Anscombe's Quartet}
+\begin{center}
+	\includegraphics[width = \textwidth]{images/anscombe2.png}
+	Lesson learned: \textbf{Regression output does not tell the full story!} \\ \medskip
+\end{center}
+\end{frame}
+
+\end{document}

@@ -1,0 +1,158 @@
+\documentclass[11pt]{beamer}
+\mode<presentation>
+%\documentclass[handout,compress]{beamer}
+\usepackage{beamerthemedefault}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{bm} 
+\usepackage{tikz}
+\usepackage{listliketab}
+
+\usetheme{CambridgeUS}
+\makeatletter
+\makeatother
+\usetikzlibrary{shapes,backgrounds}
+\tikzstyle{cblue}=[circle, draw, thin,fill=cyan!20, scale=0.8]
+\tikzstyle{qgre}=[rectangle, draw, thin,fill=green!20, scale=0.8]
+\tikzstyle{rpath}=[ultra thick, red, opacity=0.4]
+\tikzstyle{legend_isps}=[rectangle, rounded corners, thin,
+fill=gray!20, text=blue, draw]
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{text/.default=}
+%\tikzset{text/.align=0}
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}$\bullet$}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\setbeamercovered{invisible} %% <--- I ADDED THIS
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\purple}{\textcolor{purple}}
+\newcommand{\brown}{\textcolor{brown}}
+\newcommand{\cyan}{\textcolor{cyan}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\y}{\ensuremath{\mathbf{y}}}
+\newcommand{\black}{\color{black}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\green}{\color{green}}
+\newcommand{\word}[1]{\green{\textit{#1}\ }\black}
+\newcommand{\lb}{\linebreak}
+\newtheorem{com}{Comment}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\setcounter{tocdepth}{1}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+
+\title[Class 14]{Introduction to Social Data Analytics \\
+	\bigskip Class 14}
+\author[Kaushik]{Arushi Kaushik}
+\institute[UCSD]{arkaushi@ucsd.edu}
+
+
+% update title block above
+
+\begin{document}
+
+
+\frame{\titlepage}
+
+%\begin{frame}
+%    \frametitle{Housekeeping}
+%    \begin{itemize} \itemsep1em
+%    \item Midterm on Friday
+%    	\begin{itemize}
+%    	\item Today: review (most of) what we've covered so far 
+%    	\item Practice midterm posted
+%    	\end{itemize}
+%\item Midterm survey
+%    	\begin{itemize}
+%    	\item Need 90\% participation to get 2 points extra credit
+%    	\item I'll give you some time at the end of class today
+%    	\end{itemize}
+%    \end{itemize}
+%\end{frame}
+
+\begin{frame}
+\frametitle{Midterm Format}
+\begin{itemize}\itemsep1em
+	\item One question using Excel, one using Stata
+	\item Question format similar to those from the problem sets
+	\item Have until end of class - please come a little early. 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Topics to be covered: general data concepts}
+\begin{itemize}\itemsep1em
+	\item Sample size, observations, variables
+	\item Sample vs population \& representativeness
+	\item Unit of analysis
+	\item Sampling and response biases
+	\item Variable types (numerical, (un)ordered categorical, logical)
+	\item Logical operators (and, or, not)
+	\item Regression
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Topics to be covered: Excel functions and operations}
+\begin{itemize} \itemsep1em
+	\item Insert/delete/sort columns, AutoFill
+	\item Cell references
+	\item Logical (AND, OR, NOT)
+	\item Statistical (COUNT, SUM, AVERAGE, MEDIAN, MAX, MIN)
+	\item Conditional functions (IF, COUNTIF, AVERAGEIF, etc.)
+	\item Search functions (MATCH, VLOOKUP) 
+	\item Insert chart (plotting)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Topics to be covered: Stata functions and operations}
+\begin{itemize} \itemsep1em
+	\item Logical operators (\texttt{\&, $\vert$, !})
+	\item Loading and exploring data (e.g. \texttt{import, browse, count, describe, list, summarize, tabulate})
+	\item Variables (e.g. \texttt{drop, generate, rename, replace})
+	\item Sorting and selecting (e.g. \texttt{by, sort, if, in})
+	\item Graphing (e.g. \texttt{graph, twoway, scatter, line, histogram, bar, box})
+	\item Regression (e.g. \texttt{regress, lfit}) 
+	\item Wrangling (e.g. \texttt{append, merge, collapse, reshape}) 
+	\item = vs == and `` '' vs .
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+    \frametitle{Midterm Survey}
+    \begin{center}
+ goo.gl/6fPgvY \\
+ \bigskip
+Once you've finished, we can use the rest of the time for Q \& A. 
+    \end{center}
+\end{frame}
+
+
+\end{document}
