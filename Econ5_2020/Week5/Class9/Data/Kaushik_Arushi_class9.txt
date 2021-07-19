@@ -1,0 +1,278 @@
+---------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/arushikaushik/Desktop/Teaching/Poli:Econ5/2020/Week5/Class9/D
+> ata/Kaushik_Arushi_class9.txt
+  log type:  text
+ opened on:  15 Apr 2020, 17:49:04
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.     use "person2015.dta", clear
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         tab year
+
+Census year |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       2015 |  1,272,099      100.00      100.00
+------------+-----------------------------------
+      Total |  1,272,099      100.00
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         append using "person2016.dta"
+
+. 
+end of do-file
+
+. tab year
+
+Census year |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       2015 |  1,272,099       49.88       49.88
+       2016 |  1,278,292       50.12      100.00
+------------+-----------------------------------
+      Total |  2,550,391      100.00
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         append using "/Users/arushikaushik/Desktop/Teaching/Poli:Econ5/2020/Wee
+> k5/Class9/Data/person2017.dta"
+
+. 
+end of do-file
+
+. tab year
+
+Census year |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       2015 |  1,272,099       33.12       33.12
+       2016 |  1,278,292       33.28       66.39
+       2017 |  1,291,051       33.61      100.00
+------------+-----------------------------------
+      Total |  3,841,442      100.00
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         save "combined_worker.dta", replace
+file combined_worker.dta saved
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         use "/Users/arushikaushik/Desktop/Teaching/Poli:Econ5/2020/Week5/Class9
+> /Data/demographics.dta", clear
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         sort year id
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         merge 1:1 year id using "combined_worker.dta", gen(_merge)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             2
+        from master                         1  (_merge==1)
+        from using                          1  (_merge==2)
+
+    matched                         3,841,441  (_merge==3)
+    -----------------------------------------
+
+. 
+end of do-file
+
+. br if _merge==1
+
+. br if _merge==2
+
+. br if _merge==3
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         drop if _merge != 3
+(2 observations deleted)
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         drop _merge
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         sort year id
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         save "class9.dta", replace
+file class9.dta saved
+
+. 
+end of do-file
+
+. use "avg_annual_income.dta", clear
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.     use "class9.dta", clear
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.     merge m:1 year using "avg_annual_income.dta", gen(_myear)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                         3,841,441  (_myear==3)
+    -----------------------------------------
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.     use "avg_annual_income.dta", clear
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.     merge 1:m year using "class9.dta", gen(_myear)
+
+    Result                           # of obs.
+    -----------------------------------------
+    not matched                             0
+    matched                         3,841,441  (_myear==3)
+    -----------------------------------------
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.     save "class9_final.dta", replace    
+file class9_final.dta saved
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.     use "class9_final.dta", clear
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         gen unique_id1= _n
+
+. 
+end of do-file
+
+. br year id unique_id1
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         tostring year, gen(yr_str)
+yr_str generated as str4
+
+. 
+end of do-file
+
+. br year yr_str
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         tostring id, gen(id_str)
+id_str generated as str7
+
+. 
+end of do-file
+
+. br id id_str
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         gen unique_id2= yr_str + " " + id_str
+
+. 
+end of do-file
+
+. br year id unique_id1 unique_id2
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         egen id1= group(year white)
+
+. 
+end of do-file
+
+. br year white id1
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         gen id2= year*100 + white
+
+. 
+end of do-file
+
+. br year white id1 id2
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         sort year id
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD15174.000000"
+
+.         bysort year: gen within_id= _n
+
+. 
+end of do-file
+
+. tab year
+
+Census year |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       2015 |  1,272,098       33.12       33.12
+       2016 |  1,278,292       33.28       66.39
+       2017 |  1,291,051       33.61      100.00
+------------+-----------------------------------
+      Total |  3,841,441      100.00
+
+. br year within_id
+
