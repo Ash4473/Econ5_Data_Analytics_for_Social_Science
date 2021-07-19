@@ -1,0 +1,273 @@
+---
+title: |
+  | Introduction to Social Data Analytics
+  | Class 16
+author: ""
+date: ""
+output:
+  beamer_presentation:
+    keep_tex: true
+  'beamer_presentation: keep_tex: true': default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Today: Introduction to ```R``` and ```RStudio```
+
+By the end of today's lecture, you should be able to:
+
+- Locate and identify the essential parts of the RStudio interface
+- Create, edit, and save .R and .RData files
+- Generate objects and differentiate between datasets, numbers, strings, and functions
+
+
+## ```RStudio``` Interface
+
+![```RStudio``` Interface](rstudio.png)
+
+
+## Arithmetic Operations
+
+```R``` can be used as a calculator:
+
+```{r, echo = TRUE}
+5 + 3
+
+5 / 3
+
+5 ^ 3
+```
+- The [1] is telling you the row number. 
+
+## ```R``` is an "object-oriented" programming language
+
+*Objects*, any pieces of information stored by ```R```, can be:
+
+- A dataset (e.g. resume)
+- A subset of a dataset (e.g. just the even observations of resume)
+- A number (e.g. $2\pi + 1$)
+- A text string (e.g. "UCSD is awesome")
+- A function (e.g. a function that takes in $x$ and gives you $x^2 + 8$)
+
+## Creating objects
+
+```R``` can store *objects* with a name of our choice. Use ```<-``` as an assignment operator for objects.
+
+```{r, echo = TRUE}
+object_1 <- 5 + 3
+object_1
+```
+
+If we assign a new value to the same object name, then we will overwrite this object (so be careful when doing so!)
+
+```{r, echo = TRUE}
+object_1 <- 5 - 3
+object_1
+```
+
+## Objects (cont.)
+
+```R``` can also represent other types of values as objects, such as strings of characters:
+```{r, echo = TRUE}
+MySchool <- "UCSD"
+MySchool
+```
+
+
+
+## A *vector* represents a collection of information stored in a specific order
+
+We use the function ```c()```, which stands for "concatenate," to enter a data vector (with commas separating elements of the vector):
+
+```{r, echo = TRUE}
+vector.1 <- c(93, 92, 83, 99, 96, 97)
+vector.1
+```
+- Note: when creating a vector, R creates column vectors $(n \times 1)$
+
+## Vectors (cont.)
+
+To access specific elements of a vector, we use square brackets  
+```[ ]```. This is called *indexing*:
+
+```{r, echo = TRUE}
+vector.1[2]
+
+vector.1[c(2, 4)]
+
+vector.1[-4]
+```
+
+## Vectors (cont.)
+
+Since each element of this vector is a numeric value, we can apply arithmetic operations to it:
+
+```{r, echo = TRUE}
+vector.1 * 1000
+```
+
+## Element-corresponding operations with vectors
+
+```{r, echo = TRUE}
+vec1 <- c(1, 2, 3); vec2 <- c(3, 3, 3)
+vec1 + vec2
+vec1 * vec2
+vec1 / vec2
+```
+
+## Functions
+
+A *function* takes input object(s) and returns an output object. In ```R```, a function generally runs as ```funcname(input)```. Some basic functions useful for summarizing data include:
+
+- ```length()```: length of a vector (number of elements)
+- ```min()```: minimum value
+- ```max()```: maximum value
+- ```range()```: range of data
+- ```mean()```: mean
+- ```sum()```: sum
+
+Try these with ```vector.1```  
+
+## Functions (cont.)
+
+```{r, echo = TRUE}
+length(vector.1)
+
+min(vector.1)
+
+max(vector.1)
+```
+
+## Functions (cont.)
+
+```{r, echo = TRUE}
+range(vector.1)
+
+mean(vector.1)
+
+sum(vector.1)
+```
+
+## Like Stata, we need to specify a working directory in ```R```
+
+- Use the function ```setwd()``` to change the working directory
+
+```{r, eval = FALSE, echo = TRUE}
+setwd("path")
+```
+
+- Use the function ```getwd()``` to display the current working directory.
+
+```{r, eval = FALSE, echo = TRUE}
+getwd()
+```
+```## [1] path```
+
+## Loading data from your working directory
+
+- For *CSV* files:
+
+```{r, echo = TRUE}
+resume <- read.csv("resume.csv")
+```
+
+- For *RData* files:
+
+```{r, eval = FALSE, echo = TRUE}
+resume <- load("resume.RData")
+```
+
+## Data Frames
+
+A *data frame* is a collection of vectors, but we can think of it like an Excel spreadsheet. Useful functions for data frames include:
+
+- ```names()```: return a vector of variable names
+- ```nrow()```: return the number of rows
+- ```ncol()```: return the number of columns
+- ```dim()```: combine ```ncol()``` and ```nrow()``` into a vector
+- ```summary()```: produce a summary
+- ```head()```: displays the first six observations
+- ```tail()```: displays the last six observations
+
+Load ```resume.csv```, assign it to an object called ```resume```, and try the above functions on this newly created data frame.
+
+## Data Frames (cont.)
+
+```{r, echo = TRUE}
+names(resume)
+
+nrow(resume)
+
+ncol(resume)
+```
+
+## Data Frames (cont.)
+
+```{r, echo = TRUE}
+dim(resume)
+
+summary(resume)
+```
+
+## Data Frames (cont.)
+
+```{r, echo = TRUE}
+head(resume)
+
+tail(resume)
+```
+
+## Data Frames: using []
+
+We can retrieve specified observations and variables using brackets ```[ ]``` with a comma in the form ```[rows, columns]```:
+
+```{r, echo = TRUE}
+resume[1:3, "firstname"]
+
+resume[1:3, 2]
+```
+
+Observe that "firstname" is the second variable in the "resume" data frame.
+
+## Data Frames: using $
+
+The ```$``` operator is another way to access variables from a data frame:
+
+```{r, echo = TRUE}
+head(resume$firstname, 3)
+```
+
+Note: the "3" after the comma specifies how many observations to display.
+
+## Saving Objects
+
+When you quit ```RStudio```, you will be asked whether you would like to save the workspace. You should answer *no* to this in general: we only want to save what we want!
+
+- To export *CSV*:
+```{r, eval = FALSE, echo = TRUE}
+write.csv(resume, file = "resume.csv")
+```
+
+- To export *RData*:
+```{r, eval = FALSE, echo = TRUE}
+save(resume, file = "resume.RData")
+```
+
+Go ahead and export your data frame as RData. 
+
+## Here are the commands/operators we covered today:
+
+- ```<-```
+- ```c()```
+- ```vector[]```
+- ```length(), min(), max(), range(), mean(), sum()```
+- ```head(), tail()```
+- ```setwd(), getwd()```
+- ```read.csv(), load()```
+- ```names(), nrow(), ncol(), dim(), summary()```
+- ```write.csv(), save()```
+- ```$```
+
+

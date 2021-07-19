@@ -1,0 +1,340 @@
+---------------------------------------------------------------------------------
+      name:  <unnamed>
+       log:  /Users/arushikaushik/Desktop/Teaching/Poli:Econ5/2020/Week5/Class10/
+> Data/Kaushik_Arushi_class10.txt
+  log type:  text
+ opened on:  19 Apr 2020, 01:12:42
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.            use "class10.dta", clear
+
+. 
+end of do-file
+
+. tab year
+
+Census year |      Freq.     Percent        Cum.
+------------+-----------------------------------
+       2015 |  1,272,098       33.12       33.12
+       2016 |  1,278,292       33.28       66.39
+       2017 |  1,291,051       33.61      100.00
+------------+-----------------------------------
+      Total |  3,841,441      100.00
+
+. tab white
+
+       1 if |
+self-report |
+ed White, 0 |
+  otherwise |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |    778,713       20.27       20.27
+          1 |  3,062,728       79.73      100.00
+------------+-----------------------------------
+      Total |  3,841,441      100.00
+
+. tab female
+
+       1 if |
+self-report |
+ ed female, |
+0 otherwise |      Freq.     Percent        Cum.
+------------+-----------------------------------
+          0 |  1,985,298       51.68       51.68
+          1 |  1,856,143       48.32      100.00
+------------+-----------------------------------
+      Total |  3,841,441      100.00
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.          collapse (count) id (mean) income hours age white female, by(year)
+
+. 
+end of do-file
+
+. rename * *mean
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.            use "class10.dta", clear
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.                   collapse (count) id no_obs=id (mean) income hours age white f
+> emale incomemean=income ////
+>                   hoursmean=hours agemean=age prop_white=white prop_female=fema
+> le, by(year)
+
+.                 
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.           save "class10collapsed1.dta", replace
+file class10collapsed1.dta saved
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.               graph bar incomemean , over(year) name(method1, replace) ///
+>               title("Mean income over time (first method)") ///
+>               ytitle("Mean income in US")
+
+.                   
+.                   graph export year1.png, replace
+(file /Users/arushikaushik/Desktop/Teaching/Poli:Econ5/2020/Week5/Class10/Data/ye
+> ar1.png written in PNG format)
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.         use "class10.dta", clear
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.         collapse (count) id (mean) income hours , by(year white)
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.                 local varlist " hours income"
+
+.               foreach v in `varlist'{
+  2.                      rename `v' `v'mean
+  3.                }        
+
+.                    
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.           save "class10collapsed2.dta", replace
+file class10collapsed2.dta saved
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.               graph bar incomemean , over(white) over(year) name(method1_race, 
+> replace) ///
+>               title("Mean income over time (first method)") ///
+>               ytitle("Mean income in US")       
+
+.                   
+.                   graph export year_race1.png, replace 
+(file /Users/arushikaushik/Desktop/Teaching/Poli:Econ5/2020/Week5/Class10/Data/ye
+> ar_race1.png written in PNG format)
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.         use "class10.dta", clear
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.             sort year id
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.                  gen k=1
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.              bysort year: egen no_obs=sum(k) 
+
+. 
+end of do-file
+
+. br year id k no_obs
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.        bysort year: egen incomemean= mean(income)
+
+.            bysort year: egen hoursmean= mean(hours)
+
+.            bysort year: egen agemean= mean(age)
+
+.            bysort year: egen femalemean= mean(female)
+
+.            bysort year: egen whitemean= mean(white)
+
+.     
+. 
+end of do-file
+
+. br year k no_obs incomemean hoursmean agemean femalemean whitemean
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.            bysort year: keep if _n==1
+(3,841,438 observations deleted)
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.         graph bar incomemean , over(year) name(method2, replace) ///
+>         title("Mean income over time (second method)") ///
+>         ytitle("Mean income in US")
+
+.         
+.         graph export year2.png, replace
+(file /Users/arushikaushik/Desktop/Teaching/Poli:Econ5/2020/Week5/Class10/Data/ye
+> ar2.png written in PNG format)
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.         use "class10.dta", clear
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.             sort year id
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.                  gen k=1
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.              bysort year white: egen no_obs=sum(k) 
+
+. 
+end of do-file
+
+. br year white k no_obs
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.        bysort year white: egen incomemean= mean(income)
+
+.            bysort year white: egen hoursmean= mean(hours)
+
+. 
+end of do-file
+
+. br year white k no_obs incomemean hoursmean
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.            bysort year white: keep if _n==1
+(3,841,435 observations deleted)
+
+. 
+end of do-file
+
+. br year white k no_obs incomemean hoursmean
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.         graph bar incomemean , over(white) over(year) name(method2_race, replac
+> e) ///
+>         title("Mean income over time (second method)") ///
+>         ytitle("Mean income in US")
+
+.         
+.         graph export year_race2.png, replace
+(file /Users/arushikaushik/Desktop/Teaching/Poli:Econ5/2020/Week5/Class10/Data/ye
+> ar_race2.png written in PNG format)
+
+.         
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.         use "class10.dta", clear
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.         reshape wide age white female perwt hours income, i(id) j(year)
+(note: j = 2015 2016 2017)
+
+Data                               long   ->   wide
+-----------------------------------------------------------------------------
+Number of obs.                  3.8e+06   -> 1.4e+06
+Number of variables                   8   ->      19
+j variable (3 values)              year   ->   (dropped)
+xij variables:
+                                    age   ->   age2015 age2016 age2017
+                                  white   ->   white2015 white2016 white2017
+                                 female   ->   female2015 female2016 female2017
+                                  perwt   ->   perwt2015 perwt2016 perwt2017
+                                  hours   ->   hours2015 hours2016 hours2017
+                                 income   ->   income2015 income2016 income2017
+-----------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.         reshape long age white female perwt hours income, i(id) j(year)
+(note: j = 2015 2016 2017)
+
+Data                               wide   ->   long
+-----------------------------------------------------------------------------
+Number of obs.                  1.4e+06   -> 4.2e+06
+Number of variables                  19   ->       8
+j variable (3 values)                     ->   year
+xij variables:
+                age2015 age2016 age2017   ->   age
+          white2015 white2016 white2017   ->   white
+       female2015 female2016 female2017   ->   female
+          perwt2015 perwt2016 perwt2017   ->   perwt
+          hours2015 hours2016 hours2017   ->   hours
+       income2015 income2016 income2017   ->   income
+-----------------------------------------------------------------------------
+
+. 
+end of do-file
+
+. do "/var/folders/f3/lm60hfk53pl_9chk7pv75myc0000gn/T//SD20788.000000"
+
+.         capture log close
