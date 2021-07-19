@@ -1,0 +1,407 @@
+\documentclass[11pt]{beamer}
+\mode<presentation>
+%\documentclass[handout,compress]{beamer}
+\usepackage{beamerthemedefault}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{bm} 
+\usepackage{tikz}
+\usepackage{listliketab}
+
+\usetheme{CambridgeUS}
+\makeatletter
+\makeatother
+\usetikzlibrary{shapes,backgrounds}
+\tikzstyle{cblue}=[circle, draw, thin,fill=cyan!20, scale=0.8]
+\tikzstyle{qgre}=[rectangle, draw, thin,fill=green!20, scale=0.8]
+\tikzstyle{rpath}=[ultra thick, red, opacity=0.4]
+\tikzstyle{legend_isps}=[rectangle, rounded corners, thin,
+                       fill=gray!20, text=blue, draw]
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{text/.default=}
+%\tikzset{text/.align=0}
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}$\bullet$}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\setbeamercovered{invisible}
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\purple}{\textcolor{purple}}
+\newcommand{\brown}{\textcolor{brown}}
+\newcommand{\cyan}{\textcolor{cyan}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\y}{\ensuremath{\mathbf{y}}}
+\newcommand{\black}{\color{black}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\green}{\color{green}}
+\newcommand{\word}[1]{\green{\textit{#1}\ }\black}
+\newcommand{\lb}{\linebreak}
+\newtheorem{com}{Comment}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\setcounter{tocdepth}{1}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+
+\title[Class 1]{Introduction to Social Data Analytics \\
+\bigskip Class 1}
+\author[Kaushik]{Arushi Kaushik}
+\institute[UCSD]{Department of Economics \\ UCSD}
+\date{}
+
+
+% Edit the above section as well as entering a few pieces of information below:
+% Office hours
+% A slide about yourself
+% A slide about how you use data analysis in your research
+% Update survey link if necessary
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+ \frametitle{Why take this class?}
+  \begin{itemize}
+\item Social science is experiencing a \alert{revolution} \pause
+\item Social data \alert{EXPLOSION} available from:
+\begin{itemize}
+\item governments
+\item non-profits
+\item businesses
+\item citizens 
+\end{itemize}\pause
+\item Better \alert{computing power} and \alert{statistical} techniques to analyze it
+\item Requires knowledge of \alert{social science}, \alert{computer programming} and \alert{statistics} to be useful! 
+\pause
+\item The short answer: \textbf{better career prospects}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Learning objectives and class goals}
+By the end of this course, you should be able to:
+\begin{itemize}
+\item Analyze data to solve \alert{real world problems}
+\item Conduct basic operations in \alert{Excel, Stata,} and \alert{R} 
+\item Identify resources for \alert{further learning}
+\item Feel \alert{inspired} and \alert{empowered} to work with data
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{What you can expect of me}
+\begin{itemize}
+\item Enthusiasm: I am \alert{passionate} about data analytics \pause
+\item Timeliness: class will start \alert{on time}, questions answered in 24 hours \pause
+\item Helpfulness: \alert{your success} is my goal and my priority
+\begin{itemize}
+	\item[-] I will happily answer any and all questions
+	\item[-] My office hour is Wednesdays 2-3 pm at Room No. 124, Economics Building
+	\item[-] My email address: arkaushi@ucsd.edu
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{My expectations of you}
+\begin{itemize}
+\item Adopt a \alert{growth mindset:} \uncover
+{work hard, seek out resources, believe in yourself} \pause
+\item \alert{Interrupt} me and ask questions! Especially \textit{when} I make mistakes \pause
+\item Use \alert{Piazza} for all course content-related questions \pause
+\item \alert{Actively participate}:
+	\begin{itemize}
+	\item[-] in class: lecture will be interactive
+	\item[-] on Piazza: help your classmates
+	\item[-] on assignments: working in groups okay (and encouraged) but copying not
+	\end{itemize}
+\end{itemize}
+\bigskip
+\pause
+Let's start with introductions.
+\end{frame}
+
+\begin{frame}
+\frametitle{Who am I?}
+\begin{center}
+ \includegraphics[scale=.30]{images/arushi2.png} 
+\end{center}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\frametitle{Data analytics in my research}
+ \includegraphics[scale=.35]{images/BhopalGasDisaster.png} 
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\begin{center}
+\frametitle{Data analytics in my research}
+ \includegraphics[scale=.15]{images/Cancer_Cohort.jpg} 
+\end{center}
+\end{frame}
+
+
+\begin{frame}
+\frametitle{Introduce yourself to your neighbor}
+\begin{itemize}
+\item Good places to start:
+	\begin{itemize}
+	\item[-] Name
+	\item[-] Major
+	\item[-] Hometown
+	\end{itemize}
+\item I like to share something \alert{memorable}
+\item Exchange phone number and/or email 
+\pause
+\bigskip
+\item I'd like to meet all of you, too!
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{How do we get started?}
+\uncover
+{\begin{center}
+Hilary Mason (Chief Data Scientist at Bitly) \\
+\includegraphics[scale=.15]{images/HilaryMason.png}
+\end{center}
+}
+\bigskip
+\uncover<+->
+{What you need to do data science:}
+\begin{enumerate}
+\item A question
+\item A dataset
+\item Something to analyze it with
+\end{enumerate}
+
+\end{frame}
+
+
+\begin{frame}
+\frametitle{1. A question}
+Good questions could come from:
+\begin{itemize}
+\item Tech Firms/Startups
+\item Social media
+\item Government policy 
+\item Academic research
+\item Political campaigns $\hdots$ and much more!
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{2. A dataset}
+It's easy to find datasets online:
+\begin{itemize}
+\item data.gov
+\item census.gov/data
+\item ipums.org
+\item data.worldbank.org
+\item registry.opendata.aws
+\item Our TritonEd page for data used in this course \pause
+\end{itemize}
+We will begin exploring data next class.
+\end{frame}
+
+\begin{frame}
+\frametitle{3. Something to analyze data with}
+How will we work with the data? So many options....\\
+\bigskip
+\uncover
+{Excel, SAS, SPSS, Stata, R, Python, Matlab, Gauss, C, Java, SciLab...}\\
+\bigskip
+Our focus: \alert{Excel}, \alert{Stata}, \alert{R} \pause
+\begin{itemize}
+\item Why only these three?
+\begin{itemize}
+\item \alert{Important} for the social sciences at UCSD
+\item Highly requested by \alert{employers}
+\end{itemize} \pause
+\item Why not just focus on one?
+\begin{itemize}
+\item You will \alert{shift} between softwares in your career
+\item We'll focus on the \alert{main takeaways} and demonstrate how they apply to each
+\item You will learn how to \alert{further} your knowledge independently
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{3.  Something to analyze data with}
+Main takeaways:
+\begin{itemize}
+\item How to \alert{import} data
+\item How to \alert{automate} routines and \alert{reproduce} them
+\item How to \alert{visualize} data 
+\item How to conduct \alert{regressions}
+\item How to use \alert{logic} in \alert{if statements}
+\item How to use \alert{for loops}
+\item How to write \alert{functions}
+\end{itemize}
+\uncover
+{All the while better understanding \alert{social science questions}!}
+\end{frame}
+
+
+\begin{frame}\frametitle{The Organizing Framework}
+\begin{enumerate}
+\item<1-> Unit 1: \alert{Excel}
+\uncover<1->{\begin{itemize}
+\item Introduction to data structure
+\item Functions and plotting in Excel
+\end{itemize}}
+\pause
+\item<1-> Unit 2: \alert{Stata}
+\begin{itemize}
+\item Introduction to scripting and reproducibility
+\item Descriptive statistics
+\item If statements 
+\item Graphics and regression 
+\item Data wrangling
+\end{itemize}
+\pause
+\item<1-> Unit 3: \alert{R}
+\begin{itemize}
+\item Introduction to scripting in R
+\item Visualizing data 
+\item If statements and for loops 
+\item Regression and functions
+\item Data wrangling
+\end{itemize}
+\end{enumerate}
+\end{frame}
+
+\begin{frame}
+\frametitle{Assignments}
+
+\begin{itemize}
+\item[-] \alert{Four Problem Sets}: (40\% of grade)
+\begin{itemize}
+\item[-] One Excel, one Stata, and two R
+\item[-] Turn in commented code that can run 
+\item[-] List names of people you worked with on first sheet of solutions \pause
+\end{itemize}
+\item[-] \alert{Midterm}: (20\%) 
+\begin{itemize}
+	\item[-] computer-based assessment of data analysis in Excel and Stata \pause
+\end{itemize}
+\item[-] \alert{Final Project}: (30\%) 
+\begin{itemize}
+\item[-] Updates due throughout quarter with problem sets \pause
+\end{itemize}
+\item[-] \alert{Pre-class exercises}: Due midnight before each class (5\%) 
+\begin{itemize}
+\item[-] Will help prepare you for in class activities \pause
+\end{itemize}
+\item[-] \alert{Participation}: (5\%)
+\begin{itemize}
+\item[-] Lecture and section \alert{attendance required}
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Course Materials}
+\begin{itemize}
+\item Before each class, you will be expected to submit brief exercises
+\begin{itemize}
+	\item The best way to improve your analytics skills is to \alert{practice}!
+	\item These exercises will prep you for in-class activities \pause
+\end{itemize}
+\item Course materials listed in the syllabus will help with the exercises
+\begin{itemize}
+\item Readings
+\item Youtube videos
+\item When we get to R, \textit{A First Course in Quantitative Social Science} by Kosuke Imai \pause
+\end{itemize}
+\item Datasets, problem sets, and more will be posted on \alert{TritonEd} \pause
+\item Questions on course content should be asked on \alert{Piazza}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Software you will need}
+\begin{itemize}
+\item[-] \alert{Excel}
+\begin{itemize}
+\item[-] Install before next class (free campus license)
+\item[-] Available on most campus computers
+\end{itemize}
+\item[-] \alert{Stata}
+\begin{itemize}
+\item[-] Normally expensive
+\item[-] We will provide a campus license
+\end{itemize}
+\item[-] \alert{R}
+\begin{itemize}
+\item[-] Free!  
+\item[-] I will show you how to download in the second half of the course
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Some housekeeping}
+What does \alert{academic integrity} mean to you?\\
+\pause
+\bigskip
+From the Academic Integrity Office: ``Cheating occurs when a student attempts to get academic credit in a way that is dishonest, disrespectful, irresponsible, untrustworthy, or unfair.''\\
+\pause
+\bigskip
+We will take academic integrity seriously. 
+\end{frame}
+
+\begin{frame}
+\frametitle{I want to know about you.}
+
+In the spirit of data science....
+\bigskip
+\begin{center}
+https://bit.ly/2q1mUdg % Update this link if needed
+\end{center}
+\bigskip
+\bigskip
+Remember to submit your pre class exercise (via TritonEd) before next class!
+
+\end{frame}
+
+\end{document}
+
+
+
+
+
+
+
+
+

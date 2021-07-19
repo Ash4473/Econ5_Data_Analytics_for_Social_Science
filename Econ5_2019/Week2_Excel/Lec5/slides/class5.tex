@@ -1,0 +1,226 @@
+\documentclass[11pt]{beamer}
+\mode<presentation>
+%\documentclass[handout,compress]{beamer}
+\usepackage{beamerthemedefault}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{bm} 
+\usepackage{tikz}
+\usepackage{listliketab}
+
+\usetheme{CambridgeUS}
+\makeatletter
+\makeatother
+\usetikzlibrary{shapes,backgrounds}
+\tikzstyle{cblue}=[circle, draw, thin,fill=cyan!20, scale=0.8]
+\tikzstyle{qgre}=[rectangle, draw, thin,fill=green!20, scale=0.8]
+\tikzstyle{rpath}=[ultra thick, red, opacity=0.4]
+\tikzstyle{legend_isps}=[rectangle, rounded corners, thin,
+                       fill=gray!20, text=blue, draw]
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{text/.default=}
+%\tikzset{text/.align=0}
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}$\bullet$}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\setbeamercovered{invisible}
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\purple}{\textcolor{purple}}
+\newcommand{\brown}{\textcolor{brown}}
+\newcommand{\cyan}{\textcolor{cyan}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\y}{\ensuremath{\mathbf{y}}}
+\newcommand{\black}{\color{black}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\green}{\color{green}}
+\newcommand{\word}[1]{\green{\textit{#1}\ }\black}
+\newcommand{\lb}{\linebreak}
+\newtheorem{com}{Comment}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\setcounter{tocdepth}{1}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+
+\title[Class 5]{Introduction to Social Data Analytics \\
+\bigskip Class 5}
+\author[Kaushik]{Arushi Kaushik}
+\institute[UCSD]{arkaushi@ucsd.edu}
+\date{}
+
+% update title block above
+
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+ \frametitle{Today's Structure}
+\begin{itemize} \itemsep1em
+%\item Quickly review the quiz 
+\item Plotting in Excel 
+	\begin{itemize}
+	\item Download and open class5.xlsx if you haven't already.
+	\end{itemize}
+\item Work in pairs and help each other as needed.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Today's Learning Objectives}
+From Pre Class 5 Exercise: 
+\begin{itemize}
+	\item nested IF statements, IFNA, COUNTIFS, status bar sum, insert scatterplot, edit titles and axis labels
+\end{itemize} \pause
+\bigskip
+After today, you should be able to:
+\begin{itemize}
+	\item Create the following plots in Excel: scatter, histogram, bar, pie
+	\item Add elements to plots including titles, axis labels, trendlines, etc.
+	\item Adjust axis ranges, bin sizes, and colors
+\end{itemize} % \pause \bigskip 
+%Please download and open class5.xlsx if you haven't already.
+\end{frame}
+
+\begin{frame}
+\frametitle{The basics of Excel plots}
+\begin{center}
+	\includegraphics[width = \textwidth]{images/excel1.png} 
+\end{center}
+\begin{itemize}
+	\item First, select relevant data (e.g. columns B and C) \pause
+	\item Second, via the Insert tab, choose the plot category you want to create (e.g. Scatter)
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{The basics of Excel plots}
+\begin{center}
+	\includegraphics[width = 0.8 \textwidth]{images/excel2.png} 
+\end{center}
+\begin{itemize}
+	\item Third, hover over the plot type and check the preview. Click if it's the plot type you want to create.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Adding elements to a plot}
+\begin{center}
+	\includegraphics[width = \textwidth]{images/excel3.png} 
+\end{center}
+\begin{itemize}
+	\item Select the plot and click the plus near the top right corner \pause
+	\item Add axis titles and a trendline 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Editing plot label text}
+\begin{center}
+	\includegraphics[width = \textwidth]{images/excel4.png} 
+\end{center}
+\begin{itemize}
+	\item Click the plot title and axis titles to edit the text 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Changing the trendline options}
+\begin{center}
+	\includegraphics[width = 0.7 \textwidth]{images/excel5.png} 
+\end{center}
+\begin{itemize}
+	\item Right-click the trendline and select ``Format Trendline" \pause
+	\item Navigate to the rightmost sub-menu (looks like a barplot) \pause
+	\item Select ``Display Equation on chart" and ``Display R-squared value"
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Editing axis scaling}
+\begin{center}
+	\includegraphics[width = \textwidth]{images/excel6.png} 
+\end{center}
+\begin{itemize}
+	\item Right-click the y-axis and select ``Format Axis" \pause
+	\item Set the maximum bound to 100 \pause 
+	\item Click the x-axis and set the max bound to 4.0
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Editing axis scaling}
+\begin{center}
+	\includegraphics[width = 0.7 \textwidth]{images/excel7.png} 
+\end{center}
+\begin{itemize}
+	\item Towards the bottom of the ``Format Axis" menu, click the ``Number" sub-sub-menu \pause
+	\item Change the category to ``Number" and ensure there are two decimal places 
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Changing colors}
+\begin{center}
+	\includegraphics[width = 0.7 \textwidth]{images/excel8.png} 
+\end{center}
+\begin{itemize}
+	\item Right-click a point in the plot and select ``Format Data Series" \pause
+	\item Navigate to the leftmost sub-menu (paint can), and select ``Marker" \pause
+	\item Change the following: type, size, fill color, border color
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{The rest of today's class}
+\begin{itemize} \itemsep1em
+	\item Try creating a histogram, barplot, and pie chart \pause
+	\item Each sheet contains the data necessary for each plot \pause 
+	\item An example of each plot is shown on the first sheet (``Data") \pause
+	\item Help your partners, and we'll finish the rest of the plots on Friday.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Next class}
+\begin{itemize} \itemsep1em
+	\item[] Friday we will continue plotting in Excel. 
+	\item[] See you then!
+\end{itemize}
+\end{frame}
+\end{document}
+
+
+
+
+
+
+
+
+
