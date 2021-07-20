@@ -1,0 +1,161 @@
+---
+title: |
+  | Introduction to Social Data Analytics
+  | Class 17
+author: ""
+date: ""
+output:
+  beamer_presentation:
+    keep_tex: true
+  'beamer_presentation: keep_tex: true': default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Today: logic and subsetting in ```R```
+
+By the end of today's lecture, you should be able to:
+
+- Write logic statements in R and identify the relevant Boolean operators
+- Generate subsets of data using logic operators and \texttt{\$}
+
+Open class17.R if you haven't already. 
+
+## Any questions from the pre class exercise?
+
+```{r, echo = TRUE, eval = TRUE}
+"Triton" != "triton"
+5<3 | FALSE
+vec1 <- c(TRUE, TRUE, FALSE, TRUE); sum(vec1) > 3
+```
+
+## Creating lists and sequences
+- Suppose you want a list of numbers increasing by 1
+```{r, echo = TRUE}
+list1 <- 1:5
+list1
+list1 > 3
+(list1 > 1) & (list1 < 5)
+```
+
+## Now suppose you want a list of numbers increasing by 0.5
+- Use the command ```seq(start, end, increment)```
+```{r, echo = TRUE}
+sequence1 <- seq(1,5,0.5)
+sequence1
+(sequence1 > 1) & (sequence1 < 5)
+```
+- With your partner, generate a sequence with six elements starting at 10 and ending at 20.
+
+## Some "class" examples
+
+```{r, echo = TRUE}
+x = 5
+class(x)
+y = "My name is King Triton."
+class(y)
+z = TRUE
+class(z)
+```
+
+## The \textit{class} function outputs the class of the object you insert
+
+- Separate classes cannot in general be combined unless you convert them first
+- We can \alert{coerce} objects to be recognized as different classes
+
+## Objects: coercion with "as" 
+```{r, echo = TRUE}
+z.str <- c("1", "2", "602")
+z.num <- as.numeric(z.str)
+z.str
+z.num
+# z.str + c(1,1,1) will give an error
+z.num + c(1,1,1)
+```
+
+## More "as" functions
+```{r, echo = TRUE}
+a_num <- c(1,2,3, 3498)
+a_str <- as.character(a_num)
+a_num
+a_str
+a_num + c(1,1,1,1)
+# a_str + c(1,1,1,1) will give an error
+```
+
+## But, "is" it what you think?
+```{r, echo = TRUE}
+is.character(z.num)
+is.character(z.str)
+is.numeric(a_num)
+is.numeric(a_str)
+```
+
+## How can we tell if something ```isTRUE```?
+```{r, echo = TRUE}
+isTRUE(TRUE)
+isTRUE(FALSE)
+isTRUE(T)
+isTRUE(1)
+```
+
+## But be careful...
+
+```{r, echo = TRUE}
+as.integer(TRUE)
+T <- 1
+isTRUE(T)
+```
+- T is a predefined "global" that is equivalent to TRUE, but can be changed.
+
+## Also...
+```{r, echo = TRUE}
+logic <- c(TRUE, TRUE, FALSE, TRUE)
+mean(logic)
+sum(logic)
+```
+
+## Coercion 
+- Coercion is when you call a variable of the wrong type and R tries to fix it for you.
+```{r, echo = TRUE}
+vec2 <- c(1,2,3)
+vec2
+typeof(vec2)
+class(vec2)
+```
+
+## But ...
+
+```{r, echo = TRUE}
+vec2[1] = "text"
+class(vec2)
+vec2
+# or
+TRUE == "TRUE"
+```
+- Both are examples of coercion.
+
+## Subsetting
+- ```[]``` is for subsets
+- ```$``` is for extracting by name (so what you want must be named to be used...)
+- What does ```resume$race[1:5]``` give us?
+- What does ```resume[,"race"]``` give us?
+- What does ```mean(resume$call[resume$race == "black"])``` give us?
+
+## Using subset()
+- ```R``` has a function that can help generate subsets of dataframes
+```{r, echo = TRUE, eval = FALSE}
+black <- subset(resume, select = c("firstname", "sex", 
+        "call"), subset = (race == "black"))
+```
+
+## Here are the commands/operators we covered today:
+
+- ```&, |, !, ==```
+- ```:, seq()```
+- ```class(), typeof()```
+- ```as.numeric(), as.character()```
+- ```is.numeric(), is.character(), isTRUE()```
+- ```subset()```
