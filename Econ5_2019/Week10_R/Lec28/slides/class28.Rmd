@@ -1,0 +1,333 @@
+---
+title: |
+  | Introduction to Social Data Analytics
+  | Class 28
+author: ""
+date: ""
+output:
+  beamer_presentation:
+    keep_tex: true
+---
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+```{r, echo = FALSE, eval = TRUE, message=FALSE, warning=FALSE, include=FALSE}
+library(dplyr)
+library(readxl)
+salary <- read_xlsx("colleges_salary.xlsx")
+region <- read_xlsx("colleges_region.xlsx")
+type <- read_xlsx("colleges_type.xlsx")
+```
+
+## Today: ```dplyr``` package
+
+By the end of today's lecture, you should be able to:
+
+- Download R packages from CRAN and load them into your session
+- Use the ```dplyr``` package to accomplish basic data wrangling including:
+    - Adding and deleting variables and observations
+    - Sorting, merging, and reshaping data
+    - Collapsing a table to a coarser unit of analysis
+
+Open class28.R if you haven't already. 
+
+
+## What is a package?
+
+- A package is a collection of R functions, data, and code that expand the capabilities of base R.
+- Anyone can create a package - there's even a package to help with creating packages.
+
+There are more than 14,000 publicly available packages that you can download from the Comprehensive R Archive Network (CRAN).
+
+## Using a package requires two steps.
+
+- First, install the package using:
+```{r, echo = TRUE, eval = FALSE}
+install.packages(dplyr)
+```
+You only need to download a package once. It'll remain on your computer until you uninstall R. 
+
+- Second, load the package using:
+```{r, echo = TRUE, eval = FALSE}
+library(dplyr)
+```
+You must load a package once per session. 
+
+
+## Let's create variables with ```mutate()```
+
+Create a variable ```region$california_ = TRUE``` if ```region$region == "California"```, ```FALSE``` otherwise, using:
+
+ 1. the old fashioned way
+ 2. the dpylr function 'mutate()'
+ 
+```{r, echo = TRUE, eval = TRUE}
+# a)
+region$california_a <- region$region == "California"
+```
+
+
+## Let's create variables with ```mutate()```
+```{r, echo = TRUE, eval = TRUE}
+# a)
+region <- region %>% 
+  mutate(california_b = region == "California")
+
+# compare the two:
+table(region$california_a, region$california_b)
+```
+
+## Your turn:
+
+Add the variable ```salary$high``` = 
+
+  - 1 if ```salary_start_median > 50000```, 
+  - 0 otherwise 
+  
+using ```mutate()```.
+
+## Solution:
+
+```{r, echo = TRUE, eval = TRUE}
+salary <- salary %>% 
+  mutate(high = as.numeric(salary_start_median > 50000))
+
+salary[6:10, c("salary_start_median", "high")]
+```
+
+
+## Multiple functions at once with piping
+
+One cool aspect of piping is the ability to apply multiple functions at once. 
+
+Below we apply two functons to the data frame 'salary':
+
+1. We add a variable salary_thousands = salary_start_median / 1000
+2. We rename the variable 'salary' to 'california'
+
+```{r, echo = TRUE, eval = TRUE}
+salary <- salary %>%
+  mutate(salary_thousands = salary_start_median/1000) %>%
+  rename(salary_90 = salary_midcareer_90th)
+```
+
+It can be helpful to read the ```%>%```s as "and then". 
+
+
+## Your turn:
+
+Rename the variable ```salary$high``` to ```salary$salary_high``` using rename().
+
+
+## Solution
+
+```{r, echo = TRUE, eval = TRUE}
+salary <- salary %>% rename(salary_high = high)
+```
+
+
+## Keeping certain observations
+Sometimes we want to subset a data frame that only includes certain observations. 
+
+filter() and distinct() are our friends here.
+
+- filter() keeps observations that meet logical criteria
+- distinct() removes observations with duplicate values
+
+```{r, echo = TRUE, eval = TRUE}
+state_schools <- type %>% filter(type == "State")
+
+head(state_schools, 3)
+```
+
+## Keeping certain observations
+
+```{r, echo = TRUE, eval = TRUE}
+unique_regions <- region %>% distinct(region)
+
+head(unique_regions)
+```
+
+## Your turn:
+
+1. Create a table called 'rich.grads' that contains all observations within 'salary' where ```salary_90 > 200000```. Use ```filter()```. 
+
+2. Create a table called 'unique_types' that contains one observation per 'type' in the data frame 'type'. Use ```distinct()```.
+
+## Solution:
+
+```{r, echo = TRUE, eval = TRUE}
+rich.grads <- salary %>% filter(salary_90 > 200000)
+
+rich.grads[1:5, c("name", "salary_90")]
+```
+
+## Solution:
+
+```{r, echo = TRUE, eval = TRUE}
+unique_types <- type %>% distinct(type)
+
+unique_types
+```
+
+
+## Keeping certain variables
+
+- select() keeps only the variables listed
+- transmute() keeps only variables listed and allows creation of new variables 
+
+```{r, echo = TRUE, eval = TRUE}
+salary_median <- salary %>% 
+  select(name, salary_start_median, salary_midcareer_median)
+
+head(salary_median, 3)
+```
+
+## Keeping certain variables
+```{r, echo = TRUE, eval = TRUE}
+salary_median_thous <- salary %>% 
+  transmute(name = name, 
+      salary_start_thous = salary_start_median/1000, 
+      salary_midcareer_thous = salary_midcareer_median/1000)
+
+head(salary_median_thous, 3)
+```
+
+## Your turn:
+
+Overwrite the table 'rich.grads' to only contain the variables:
+
+- ```name```  
+- ```salary_90_thous = salary_/1000```.
+
+## Solution:
+
+```{r, echo = TRUE, eval = TRUE}
+rich.grads <- rich.grads %>% 
+  transmute(name = name, salary_90_thous = salary_90/1000)
+
+head(rich.grads)
+```
+
+## Sorting data in ascending order
+
+We can sort data using ```arrange()```.
+
+```{r, echo = TRUE, eval = TRUE}
+salary <- salary %>% arrange(salary_start_median)
+
+head(salary, 3) # lowest to highest
+```
+
+## Sorting data in descending order
+
+```{r, echo = TRUE, eval = TRUE}
+salary <- salary %>% arrange(desc(salary_start_median))
+
+head(salary, 3) # highest to lowest
+```
+
+## Your turn:
+
+Sort ```rich.grads``` to go from highest 90th percentile salary to lowest.
+
+## Solution:
+
+```{r, echo = TRUE, eval = TRUE}
+rich.grads <- rich.grads %>% 
+  arrange(desc(salary_90_thous))
+
+head(rich.grads) # highest to lowest
+```
+
+
+## Merging data
+
+```{r, echo = FALSE, eval = TRUE, message=FALSE, warning=FALSE, include=FALSE}
+rm(list = ls())
+salary <- read_xlsx("colleges_salary.xlsx")
+region <- read_xlsx("colleges_region.xlsx")
+type <- read_xlsx("colleges_type.xlsx")
+```
+
+We can join data tables using a common identifier, in our case 'name' (note the _left_ join).
+
+```{r, echo = TRUE, eval = TRUE}
+df <- salary %>% left_join(region, by = "name")
+
+```
+
+After that, we will left join 'type':
+
+```{r, echo = TRUE, eval = TRUE}
+df <- df %>% left_join(type, by = "name")
+names(df)
+```
+
+## Two merges in one line of code: 
+
+```{r, echo = TRUE, eval = TRUE}
+df <- salary %>% 
+  left_join(region, by = "name") %>% 
+  left_join(type, by = "name")
+
+names(df)
+```
+
+
+## Group-wise operations
+
+We can apply functions after using the group_by() function. What's the new unit of analysis in this example?
+
+```{r, echo = TRUE, eval = TRUE}
+df_region <- df %>% 
+  group_by(region) %>% 
+  summarise(mean_start = mean(salary_start_median), 
+            mean_mid = mean(salary_midcareer_median))
+
+head(df_region, 3)
+```
+
+
+## Your turn: 
+
+Create ```df_type``` that is a data frame at the type-level and contains the average starting and mid career salaries 
+by univeristy type.
+
+## Solution:
+
+```{r, echo = TRUE, eval = TRUE}
+df_type <- df %>% 
+  group_by(type) %>% 
+  summarise(mean_start = mean(salary_start_median), 
+            mean_mid = mean(salary_midcareer_median))
+
+head(df_type, 3)
+```
+
+
+## Summary
+
+class28.R contains an example of reshaping in ```R``` using another package, ```tidyr```. Also check out the data-wrangling cheat sheet on TritonEd. 
+
+Here are the commands/operators we covered today:
+
+- ```install.packages```
+- ```library```
+- ```mutate```
+- ```rename```
+- ```filter```
+- ```distinct```
+- ```select```
+- ```transmute```
+- ```arrange```
+- ```desc```
+- ```left_join```
+- ```group_by```
+- ```summarise```
+- ```everything```
+- ```gather```
+- ```spread```
