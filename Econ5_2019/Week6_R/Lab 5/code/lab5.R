@@ -1,0 +1,79 @@
+# Econ 5/Poli 5D, Lab 6
+# In-class Activity
+#
+# Please complete the code below. You can help each other. There is most
+# likely too much to finish in one section - what you don't finish is here for 
+# additional practice to build your skills. 
+#
+# Some helpful commands/operators from class 11: <- c() length() max() min() 
+# range() mean() sum() setwd() getwd() read.csv() load() names() nrow() ncol() 
+# dim() summary() write.csv() save() 
+#
+# Some helpful commands/operators from class 12: & | ! TRUE FALSE seq() class() 
+# as.numeric() is.character() typeof() subset() 
+#
+# Remember that you can use help() if you forget the syntax for a command.
+################################################################################
+
+# remove all objects from current environment 
+rm(list = ls())
+
+## Part 0: Save the script as LastName_lab5.R
+
+## Part 1: Importing and exploring data
+# 1. Set your working directory to the location of resume.csv, import the csv,
+#     and *assign* it as a data frame object called 'resume'.
+
+
+# 2. Check the dimensions of resume, and view the variables names using the appropriate functions.
+
+
+# 3. Display the first three observations of the data frame. (Bonus: use the head() command to do the same thing.)
+
+
+# 4. Display the last three observations of the data frame. (Bonus: use the tail() command to do the same thing.)
+
+
+# 5. Display summary statistics of the entire data set. Give a summary of the race column.
+
+
+# 6. What is the class of the 'sex' column? What are the levels of the 'sex' column? (hint: use levels())
+
+
+
+## Part 2: There's more than one way to skin a cat
+# Below is an example of the difference between [] and [[]]. It's very subtle, so look carefully.
+# What is the difference? (hint: use class().)
+head(resume[["call"]], 10)  # Double bracket
+head(resume["call"], 10)  # Single bracket
+
+# If we use the $, what class of object is the following? Which of the above two objects does it resemble?
+head(resume$call, 10)
+
+# which() returns the position of elements in a logical vector that are TRUE. Is there any difference between the following?
+tail(resume$call[which(resume$race == "black")], 10)
+tail(resume$call[resume$race == "black"], 10)
+
+# But! Is there difference between a and b?
+a <- which(resume$race == "black")
+b <- resume$race == "black"
+head(a, 10)
+head(b, 10)
+
+
+## Part 3: Working with data
+# Create a new variable, called callB, which is the mean of "call" for those with race = "black"
+
+# Create a new variable, called callW, which is the mean of "call" for those with race = "white"
+
+# Calculate the difference of call rates for White minus Black names. You should get about 0.032.
+
+# Often we will want to subset the data to perform analysis on subgroups.
+# Create an object BlackMale that contains all data for those in resume with race = "black" and sex = "male".
+
+# Similarly, create objects BlackFemale, WhiteMale, and WhiteFemale. 
+
+# Now let's do a comparison across genders.
+# Calculate the difference in mean call rates between White/Black males, and between White/Black females. 
+# Is there any gender-specific trend?
+

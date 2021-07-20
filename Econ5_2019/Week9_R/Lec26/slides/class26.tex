@@ -1,0 +1,297 @@
+%\documentclass[11pt]{beamer}
+%\mode<presentation>
+\documentclass[handout,compress]{beamer}
+\usepackage{beamerthemedefault}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{bm} 
+\usepackage{tikz}
+\usepackage{listliketab}
+
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+
+\usetheme{CambridgeUS}
+\makeatletter
+\makeatother
+\usetikzlibrary{shapes,backgrounds}
+\tikzstyle{cblue}=[circle, draw, thin,fill=cyan!20, scale=0.8]
+\tikzstyle{qgre}=[rectangle, draw, thin,fill=green!20, scale=0.8]
+\tikzstyle{rpath}=[ultra thick, red, opacity=0.4]
+\tikzstyle{legend_isps}=[rectangle, rounded corners, thin,
+                       fill=gray!20, text=blue, draw]
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{text/.default=}
+%\tikzset{text/.align=0}
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}$\bullet$}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\setbeamercovered{invisible} %% <--- I ADDED THIS
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\purple}{\textcolor{purple}}
+\newcommand{\brown}{\textcolor{brown}}
+\newcommand{\cyan}{\textcolor{cyan}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\y}{\ensuremath{\mathbf{y}}}
+\newcommand{\black}{\color{black}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\green}{\color{green}}
+\newcommand{\word}[1]{\green{\textit{#1}\ }\black}
+\newcommand{\lb}{\linebreak}
+\newcommand{\vitem}{\item}
+\newtheorem{com}{Comment}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\setcounter{tocdepth}{1}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+
+\title[Class 26]{Introduction to Social Data Analytics: \\
+Class 26}
+\author[Kaushik]{Arushi Kaushik}
+\institute[UCSD]{arkaushi@ucsd.edu}
+\date[]{}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Today: (Homemade) Functions in R}
+By the end of today's lecture, you should be able to:
+\begin{itemize}
+	\item Describe how functions can save time and space while writing code
+	\item Construct functions that perform basic calculations, e.g. the mean of a subset of data
+	\item Identify the inputs and output in a function
+\end{itemize} \bigskip
+Please open class26.R and load AmericanTimeUse.RData if you haven't already.
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Share of housework in American households}
+ \begin{center}
+ \includegraphics[scale=.15]{images/housework.png}
+ \end{center}
+ \begin{itemize}
+\item \alert{American Time Use Survey} (Bureau of Labor Statistics)
+\item Measures the amount of \alert{time} people spend doing activities
+\item What did you do in the \alert{last 24 hours}?
+\item Coded into \alert{categories} by survey team
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{American Time Use Survey}
+\begin{verbatim}
+# Read in Time use data
+load("AmericanTimeUse.RData")
+\end{verbatim}
+Documentation for data is:
+\url{https://www.bls.gov/tus/lexiconnoex0315.pdf}
+\url{https://www.bls.gov/tus/atusintcodebk0315.pdf}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Your first function from PC26}
+\begin{verbatim}
+gender.mean <- function(gender) {
+return(mean(time$household[time$TESEX == gender]))
+}
+
+gender.mean(1)
+[1] 92.36724
+gender.mean(2)
+[1] 142.4052
+\end{verbatim} \bigskip
+How many inputs? How many outputs?
+
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Let's create our own `mean' function.}
+One input: a vector of numbers \\
+One output: the mean of the vector of numbers
+\begin{verbatim}
+my.mean <- function(vector){
+  mu <- sum(vector)/length(vector)
+  return(mu)
+}
+
+my.mean(time$household)
+[1] 120.5359
+mean(time$household)
+[1] 120.5359
+\end{verbatim}
+\end{frame}
+
+
+
+\begin{frame}[fragile]
+ \frametitle{Add `variable' as an input:}
+\begin{verbatim}
+my.mean <- function(variable, data){
+  mu <- mean(data[,variable])
+  return(mu)
+}
+
+my.mean("household", time)
+[1] 120.5359
+my.mean("children", time)
+[1] 33.27538
+\end{verbatim}
+\end{frame}
+
+
+\begin{frame}[fragile]
+ \frametitle{Add gender as an input}
+ Say we wanted to calculate the mean for men/women separately. This is one way we could do it outside of a function:
+\begin{verbatim}
+table(time$TESEX) # 1 is male; 2 is female
+    1     2 
+74667 96175 
+mean(time$household[time$TESEX == 1]) # men
+[1] 92.36724
+mean(time$household[time$TESEX == 2]) # women
+[1] 142.4052
+\end{verbatim} \pause
+\alert{Your turn!} Write a function \texttt{gender.mean} that takes three inputs (variable, df, gender) and returns the mean of \texttt{df\$variable} for the specified gender.
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Add gender as an input}
+\begin{verbatim}
+gender.mean <- function(variable, data, gender){
+   mu <- mean(data[data$TESEX == gender,variable])
+   return(mu)
+}
+
+gender.mean("household", time, 1)
+[1] 92.36724
+gender.mean("household", time, 2)
+[1] 142.4052
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Add age to the Function}
+ Basically we're going to do the same thing that we just did, but we are going to subset the data by \textit{both} gender and \alert{age}. \\
+ \bigskip
+ Work with your partner to write the function \texttt{gender.age.mean}. \\
+ \bigskip
+ Return the mean in \alert{hours} instead of minutes. 
+\end{frame}
+
+
+\begin{frame}[fragile]
+ \frametitle{Add age to the Function}
+\begin{verbatim}
+gender.age.mean <- function(variable, data, gender, age){
+   mu <- mean(data[data$TESEX == gender & 
+              data$TEAGE == age, variable])/60 
+   return(mu)
+}
+
+gender.age.mean("work", time, 1, 20)
+[1] 3.340932
+gender.age.mean("work", time, 2, 20)
+[1] 2.611888
+gender.age.mean("work", time, 1, 30)
+[1] 4.480926
+gender.age.mean("work", time, 2, 30)
+[1] 2.845387
+\end{verbatim}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Putting it all together}
+ Your job is to create a function \texttt{plot.by.age} that does the following:
+ \begin{itemize}
+	\item Takes inputs variable, dataframe
+	\item Outputs a plot
+	\begin{itemize}
+		\item x-axis is years of age
+		\item y-axis is mean hours spent on the specified activity (variable)
+		\item Two data series, one for men, one for women
+		\item Each point is the mean hours for a given age
+	\end{itemize}
+	\item Tip: you can use your created gender.age.mean() function inside your new function definition!
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{You final plot should look like this}
+ \begin{center}
+\includegraphics[scale=.35]{images/PlotFinal.pdf}
+\end{center}
+\end{frame}
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+

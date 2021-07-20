@@ -1,0 +1,434 @@
+%\documentclass[11pt]{beamer}
+%\mode<presentation>
+\documentclass[handout,compress]{beamer}
+\usepackage{beamerthemedefault}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{color}
+\usepackage{multicol}
+\usepackage{bm} 
+\usepackage{tikz}
+\usepackage{listliketab}
+
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+
+\usetheme{CambridgeUS}
+\makeatletter
+\makeatother
+\usetikzlibrary{shapes,backgrounds}
+\tikzstyle{cblue}=[circle, draw, thin,fill=cyan!20, scale=0.8]
+\tikzstyle{qgre}=[rectangle, draw, thin,fill=green!20, scale=0.8]
+\tikzstyle{rpath}=[ultra thick, red, opacity=0.4]
+\tikzstyle{legend_isps}=[rectangle, rounded corners, thin,
+                       fill=gray!20, text=blue, draw]
+\usetikzlibrary{decorations.pathreplacing}
+\tikzset{text/.default=}
+%\tikzset{text/.align=0}
+\tikzstyle{every picture}+=[remember picture]
+\tikzstyle{na} = [baseline=-.5ex]
+\setbeamertemplate{itemize item}{\color{black}$\bullet$}
+\setbeamertemplate{itemize subitem}{\color{black}$\bullet$}
+
+\usetikzlibrary{shapes}
+\usetikzlibrary{positioning}
+\usetikzlibrary{automata}
+\usepackage{amsmath,amssymb,amsfonts,amsthm}
+\setbeamercovered{invisible} %% <--- I ADDED THIS
+\newcommand{\red}{\textcolor{red}}
+\newcommand{\blue}{\textcolor{blue}}
+\newcommand{\purple}{\textcolor{purple}}
+\newcommand{\brown}{\textcolor{brown}}
+\newcommand{\cyan}{\textcolor{cyan}}
+\newcommand{\real}{\ensuremath{\mathbb{R}}}
+\newcommand{\y}{\ensuremath{\mathbf{y}}}
+\newcommand{\black}{\color{black}}
+\newcommand{\btheta}{\boldsymbol{\theta}}
+\newcommand{\green}{\color{green}}
+\newcommand{\word}[1]{\green{\textit{#1}\ }\black}
+\newcommand{\lb}{\linebreak}
+\newcommand{\vitem}{\item}
+\newtheorem{com}{Comment}
+\newtheorem{lem} {Lemma}
+\newtheorem{prop}{Proposition}
+\newtheorem{thm}{Theorem}
+\newtheorem{defn}{Definition}
+\newtheorem{cor}{Corollary}
+\newtheorem{obs}{Observation}
+\setcounter{tocdepth}{1}
+
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+
+\title[Class 23]{Introduction to Social Data Analytics: \\
+Class 23}
+\author[]{}
+\institute[UCSD]{}
+\date[]{}
+
+\begin{document}
+
+\frame{\titlepage}
+
+\begin{frame}
+\frametitle{Today: Regression in R}
+By the end of today's lecture, you should be able to:
+\begin{itemize}
+	\item Perform regression analysis to determine linear relationships between variables
+	\item Interpret coefficient estimates and add best fit lines to scatter plots of the data
+\end{itemize} \bigskip
+We'll work with three datasets: nba.csv, florida.csv, and face.csv.
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Review of regression basics}
+ \pause
+\begin{itemize} \itemsep1em
+\item Regression: finds the \alert{best fit} line between $k$ independent and one dependent variables.
+\item One independent variable case: $y_i = \beta_0 + \beta_1x_i + \epsilon_i$ \pause
+\item Produces \alert{estimates}: $\hat{\beta_0}$ and $\hat{\beta_1}$ 
+\item \alert{Interpretation:} \pause
+	\begin{itemize}
+		\item $\hat{\beta_1}$: a one-unit increase in $x$-units is associated with a $\hat{\beta_1}$ average increase in $y$-units. \pause
+		\item $\hat{\beta_0}$: \alert{expected} value of $y$ when $x=0$. 
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Some useful terms}
+\begin{itemize} \itemsep1em
+\item \alert{Fitted values}, \alert{predicted values}, \alert{$\hat{y}$}:
+\begin{itemize}
+\item predicted $y$ when $x$ is set to a certain value.
+\item predicted $y$ for $x$'s observed in the dataset
+\end{itemize}
+\item \alert{Residuals}
+\begin{itemize}
+\item Difference between \alert{predicted} and \alert{actual} value of $y$.
+\end{itemize}
+\item Let's return to the NBA dataset.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Height and Blocks}
+ \begin{shaded}
+\begin{verbatim}
+# Make scatter plot
+plot(nba$height, nba$blocks, 
+	  xlab = "Height", 
+	  ylab = "Blocks",
+	  pch = 16, 
+	  main = "Height of NBA Players and Blocks")
+\end{verbatim}
+\end{shaded}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Height and Blocks}
+\begin{center}
+\includegraphics[scale=.6]{NBAscatter.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Estimating Height and Blocks Relationship}
+ \begin{shaded}
+ \begin{small}
+\begin{verbatim}
+# What is the correlation between height and blocks?
+cor(nba$height, nba$blocks)
+[1] 0.8797669
+
+# Fit a regression line of the form:
+#   blocks = b0 + b1 * height
+fit <- lm(blocks ~ height, data=nba)
+
+# Check the results
+summary(fit)
+
+\end{verbatim}
+\end{small}
+\end{shaded}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Estimating Height and Blocks Relationship}
+  \begin{shaded}
+ \begin{small}
+\begin{verbatim}
+summary(fit)
+
+Call:
+lm(formula = blocks ~ height, data = nba)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.39475 -0.24761 -0.04251  0.09506  0.97341 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -7.73418    1.23275  -6.274 2.04e-05 ***
+height       0.10796    0.01559   6.924 7.05e-06 ***
+---
+Signif. codes:  0 *** 0.001 ** 0.01 * 0.05 . 0.1  1
+
+Residual standard error: 0.3401 on 14 degrees of freedom
+Multiple R-squared:  0.774,	Adjusted R-squared:  0.7578 
+F-statistic: 47.94 on 1 and 14 DF,  p-value: 7.047e-06
+
+\end{verbatim}
+\end{small}
+\end{shaded}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Add best fit line and players' names to plot}
+  \begin{shaded}
+ \begin{small}
+\begin{verbatim}
+# Now add the best fit line to the plot
+abline(fit)
+
+# Now add the players' names
+text(nba$height, nba$blocks+.1, nba$name, cex=0.6)
+
+\end{verbatim}
+\end{small}
+\end{shaded}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Height and Blocks}
+\begin{center}
+\includegraphics[scale=.6]{NBAScatter2.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Election 2000, Butterfly Ballot}
+\begin{itemize}
+\item Suppose we wanted to predict third-party votes in Florida 
+\item Use 1996 election (Perot) to predict 2000 election (Buchanan)
+\end{itemize}
+\begin{shaded}
+\begin{small}
+\begin{verbatim}
+head(florida)
+    county Clinton96 Dole96 Perot96 Bush00 Gore00 Buchanan00
+1  Alachua     40144  25303    8072  34124  47365        263
+2    Baker      2273   3684     667   5610   2392         73
+3      Bay     17020  28290    5922  38637  18850        248
+4 Bradford      3356   4038     819   5414   3075         65
+5  Brevard     80416  87980   25249 115185  97318        570
+6  Broward    320736 142834   38964 177323 386561        788
+\end{verbatim}
+\end{small}
+\end{shaded}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Do Votes for Perot Predict Votes for Buchanan?}
+ Your task is to do the following:
+ \begin{itemize} \itemsep1em
+ 	\item Plot votes for Perot96 vs votes for Buchanan00 (both third party presidential candidates)
+ 	\item Fit a best fit line through your scatterplot
+ 	\item What seems off?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Do Votes for Perot Predict Votes for Buchanan?}
+ \begin{shaded}
+\begin{small}
+\begin{verbatim}
+fit2 <- lm(Buchanan00 ~ Perot96, data = florida)
+summary(fit2)
+
+Call:
+lm(formula = Buchanan00 ~ Perot96, data = florida)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-612.74  -65.96    1.94   32.88 2301.66 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept)  1.34575   49.75931   0.027    0.979    
+Perot96      0.03592    0.00434   8.275 9.47e-12 ***
+
+\end{verbatim}
+\end{small}
+\end{shaded}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{What seems off?}
+\begin{center}
+\includegraphics[scale=.4]{Florida9600.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Which county in Florida is the outlier?}
+ \begin{shaded}
+\begin{verbatim}
+florida$county[resid(fit2) == max(resid(fit2))]
+[1] PalmBeach
+\end{verbatim}
+\end{shaded}
+\begin{center}
+\includegraphics[scale=.4]{palmballot}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]
+ \frametitle{Regression with experiments}
+\begin{itemize}
+\item Experiment: Does \alert{facial appearance} predict \alert{vote outcomes}?
+\item Todorov et al (2005): 
+\begin{itemize}
+\item Quickly show picture of candidates to subjects
+\item Ask them to rate on ``competence''
+\end{itemize}
+\end{itemize}
+\begin{center}
+\includegraphics[scale=0.75]{faces.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{The data}
+\begin{shaded}
+\begin{verbatim}
+head(face)
+\end{verbatim}
+\end{shaded}
+\begin{scriptsize}
+\begin{verbatim}
+  year state    winner     loser w.party l.party    d.comp    r.comp d.votes r.votes
+1 2000    CA Feinstein  Campbell       D       R 0.5645676 0.4354324 5790154 3779325
+2 2000    DE    Carper      Roth       D       R 0.3419122 0.6580878  181387  142683
+3 2000    FL    Nelson  McCollum       D       R 0.6123680 0.3876320 2987644 2703608
+4 2000    GA    Miller Mattingly       D       R 0.5415328 0.4584672 1390428  933698
+5 2000    HI     Akaka   Carroll       D       R 0.6802323 0.3197677  251130   84657
+6 2000    IN     Lugar   Johnson       R       D 0.3205024 0.6794976  684242 1419629
+\end{verbatim}
+\end{scriptsize} \bigskip
+\texttt{d.comp} is the fraction of subjects who think the democratic candidate appears more competent. 
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Does Facial Appearance Predict Vote Share?}
+ \begin{shaded}
+ \begin{small}
+\begin{verbatim}
+#define vote share for Dems and Reps
+face$d.share <- face$d.votes/(face$d.votes + face$r.votes)
+face$r.share <- face$r.votes/(face$d.votes + face$r.votes)
+face$diff.share <- face$d.share - face$r.share
+\end{verbatim}
+\end{small}
+\end{shaded}
+\begin{itemize}
+	\item Add a plot of Democratic candidate's competence score on the x-axis and Democratic margin in vote share on the y-axis, and label as appropriate.
+	\item Regress the model diff.share = $\beta_0 + \beta_1 *$ d.comp
+	\item Add a trendline to your plot
+	\item Is there a causal effect of appearance on voting outcome?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Does Facial Appearance Predict Vote Share?}
+\begin{center}
+\includegraphics[scale=.4]{CompetenceandVoteShare.pdf}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{How do we interpret these coefficients?}
+\begin{small}
+\begin{verbatim}
+fit3 <- lm(diff.share ~ d.comp, data = face)
+summary(fit3)
+
+Call:
+fit3 <- lm(formula = diff.share ~ d.comp, data = face)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.67487 -0.16600  0.01399  0.17741  0.74297 
+
+Coefficients:
+            Estimate Std. Error t value Pr(>|t|)    
+(Intercept) -0.31223    0.06596  -4.733 6.24e-06 ***
+d.comp       0.66038    0.12718   5.193 8.85e-07 ***
+---
+\end{verbatim}
+\end{small}
+\end{frame}
+
+\begin{frame}[fragile]
+ \frametitle{Does Facial Appearance Predict Vote Share?}
+\begin{center}
+\includegraphics[scale=.4]{faces2.png}
+\end{center}
+\end{frame}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+

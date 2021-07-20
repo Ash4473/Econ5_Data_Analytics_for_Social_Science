@@ -1,0 +1,638 @@
+\documentclass[ignorenonframetext,]{beamer}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+
+\usetheme{CambridgeUS}
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+\setbeamertemplate{itemize items}{\color{UBCblue}$\blacktriangleright$}
+
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+\ifxetex
+\usepackage{mathspec}
+\else
+\usepackage{fontspec}
+\fi
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+	\usepackage{microtype}
+	\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\newif\ifbibliography
+\hypersetup{
+	pdfauthor={UCSD},
+	pdfborder={0 0 0},
+	breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight0.8\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+
+\AtBeginPart{
+	\let\insertpartnumber\relax
+	\let\partname\relax
+	\frame{\partpage}
+}
+\AtBeginSection{
+	\ifbibliography
+	\else
+	\let\insertsectionnumber\relax
+	\let\sectionname\relax
+	\frame{\sectionpage}
+	\fi
+}
+\AtBeginSubsection{
+	\let\insertsubsectionnumber\relax
+	\let\subsectionname\relax
+	\frame{\subsectionpage}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+	\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+
+\title[Class 20]{Introduction to Social Data Analytics\\
+	Class 20}
+\author[Kaushik]{Arushi Kaushik}
+\institute[UCSD]{arkaushi@ucsd.edu}
+%\date[]{}
+
+
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}[fragile]{Today: more practice with loops}
+
+By the end of today's lecture, you should be able to:
+
+\begin{itemize}
+\tightlist
+\item
+  Build loops that utilize the `counter' (e.g.~i) in three ways:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    As a number for calculations
+  \item
+    As a subset index
+  \item
+    As an element of a vector (of strings or numbers)
+  \end{itemize}
+\item
+  Construct \texttt{while} loops that may include conditional statements
+\end{itemize}
+
+Open class20.R if you haven't already.
+
+\end{frame}
+
+\begin{frame}[fragile]{Tools in your loop toolbox}
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{for}, \texttt{if}, \texttt{else}, and (soon) \texttt{while}
+\item
+  Using \texttt{i} as a number itself
+\item
+  Using \texttt{i} to subset data
+\item
+  Using \texttt{i} as an element of a vector
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{The problem: no \texttt{year} vector}
+
+From pre class exercise:
+
+\begin{itemize}
+\tightlist
+\item
+  Suppose I have data on the US population from 1790 - 1970
+\item
+  But I don't have a \texttt{year} vector
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{data}\NormalTok{(uspop)}
+\KeywordTok{summary}\NormalTok{(uspop)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##    3.93   15.00   50.20   69.77  114.25  203.20
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{n <-}\StringTok{ }\KeywordTok{length}\NormalTok{(uspop)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  How could I generate a \texttt{year} vector using loops?
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Option 1: use \texttt{i} as a number itself}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n)\{}
+  \KeywordTok{print}\NormalTok{(}\DecValTok{1780} \OperatorTok{+}\StringTok{ }\DecValTok{10}\OperatorTok{*}\NormalTok{i)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Option 1: use \texttt{i} as a number itself}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n)\{}
+  \KeywordTok{print}\NormalTok{(}\DecValTok{1780} \OperatorTok{+}\StringTok{ }\DecValTok{10}\OperatorTok{*}\NormalTok{i)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1790
+## [1] 1800
+## [1] 1810
+## [1] 1820
+## [1] 1830
+## [1] 1840
+## [1] 1850
+## [1] 1860
+## [1] 1870
+## [1] 1880
+## [1] 1890
+## [1] 1900
+## [1] 1910
+## [1] 1920
+## [1] 1930
+## [1] 1940
+## [1] 1950
+## [1] 1960
+## [1] 1970
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Option 2: use \texttt{i} to subset data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{year <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{, n)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n)\{}
+\NormalTok{  year[i] <-}\StringTok{ }\DecValTok{1780} \OperatorTok{+}\StringTok{ }\DecValTok{10}\OperatorTok{*}\NormalTok{i}
+  \KeywordTok{print}\NormalTok{(year[i])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Option 2: use \texttt{i} to subset data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{year <-}\StringTok{ }\KeywordTok{rep}\NormalTok{(}\OtherTok{NA}\NormalTok{, n)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\NormalTok{n)\{}
+\NormalTok{  year[i] <-}\StringTok{ }\DecValTok{1780} \OperatorTok{+}\StringTok{ }\DecValTok{10}\OperatorTok{*}\NormalTok{i}
+  \KeywordTok{print}\NormalTok{(year[i])}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1790
+## [1] 1800
+## [1] 1810
+## [1] 1820
+## [1] 1830
+## [1] 1840
+## [1] 1850
+## [1] 1860
+## [1] 1870
+## [1] 1880
+## [1] 1890
+## [1] 1900
+## [1] 1910
+## [1] 1920
+## [1] 1930
+## [1] 1940
+## [1] 1950
+## [1] 1960
+## [1] 1970
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Option 3: \texttt{i} as an element of a vector}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{year <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{1790}\NormalTok{, }\DecValTok{1970}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ year)\{}
+  \KeywordTok{print}\NormalTok{(i)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  This use is useful when \texttt{i} refers to an element of a vector of
+  text strings
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Option 3: \texttt{i} as an element of a vector}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{year <-}\StringTok{ }\KeywordTok{seq}\NormalTok{(}\DecValTok{1790}\NormalTok{, }\DecValTok{1970}\NormalTok{, }\DecValTok{10}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ year)\{}
+  \KeywordTok{print}\NormalTok{(i)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 1790
+## [1] 1800
+## [1] 1810
+## [1] 1820
+## [1] 1830
+## [1] 1840
+## [1] 1850
+## [1] 1860
+## [1] 1870
+## [1] 1880
+## [1] 1890
+## [1] 1900
+## [1] 1910
+## [1] 1920
+## [1] 1930
+## [1] 1940
+## [1] 1950
+## [1] 1960
+## [1] 1970
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Third use with a vector of text strings}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{instructors <-}\StringTok{ }\KeywordTok{c}\NormalTok{(}\StringTok{"Arushi"}\NormalTok{, }\StringTok{"Cameron"}\NormalTok{, }\StringTok{"Duy"}\NormalTok{, }
+                 \StringTok{"Mitch"}\NormalTok{, }\StringTok{"Zack"}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in}\NormalTok{ instructors)\{}
+  \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(i,}\StringTok{"is an instructor."}\NormalTok{))}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "Arushi is an instructor."
+## [1] "Cameron is an instructor."
+## [1] "Duy is an instructor."
+## [1] "Mitch is an instructor."
+## [1] "Zack is an instructor."
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{An example with \texttt{for}, \texttt{if}, and
+\texttt{else}}
+
+\begin{itemize}
+\tightlist
+\item
+  For each number \texttt{i} in 1:10, output whether \texttt{i} is even.
+\item
+  To do this, we will use \texttt{if} statements within a \texttt{for}
+  loop.
+\item
+  First, let's introduce \texttt{\%\%} and \texttt{paste()}:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\DecValTok{7} \OperatorTok{%%}\StringTok{ }\DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{remainder <-}\StringTok{ }\DecValTok{7} \OperatorTok{%%}\StringTok{ }\DecValTok{5}
+\KeywordTok{paste}\NormalTok{(remainder,}\StringTok{"is the remainder"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "2 is the remainder"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{An example with \texttt{for}, \texttt{if}, and
+\texttt{else}}
+
+Step 1:
+
+\begin{itemize}
+\tightlist
+\item
+  Write the \texttt{if} statements needed to test whether a number
+  \texttt{i} is even
+\item
+  If it is even, output the number and ``is even.''
+\item
+  If it is odd, output the number and ``is odd''
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{An example with \texttt{for}, \texttt{if}, and
+\texttt{else}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+  \ControlFlowTok{if}\NormalTok{(i }\OperatorTok{%%}\StringTok{ }\DecValTok{2} \OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)\{ }
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(i,}\StringTok{"is even."}\NormalTok{))}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(i,}\StringTok{"is odd."}\NormalTok{))}
+\NormalTok{  \} }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Now do Step 2: add the \texttt{for} loop so that the commands above
+  are performed over all values in 1:10
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{An example with \texttt{for}, \texttt{if}, and
+\texttt{else}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)\{}
+  \ControlFlowTok{if}\NormalTok{(i }\OperatorTok{%%}\StringTok{ }\DecValTok{2} \OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)\{ }
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(i,}\StringTok{"is even."}\NormalTok{))}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(i,}\StringTok{"is odd."}\NormalTok{))}
+\NormalTok{  \} }
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{An example with \texttt{for}, \texttt{if}, and
+\texttt{else}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{for}\NormalTok{(i }\ControlFlowTok{in} \DecValTok{1}\OperatorTok{:}\DecValTok{10}\NormalTok{)\{}
+  \ControlFlowTok{if}\NormalTok{(i }\OperatorTok{%%}\StringTok{ }\DecValTok{2} \OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)\{ }
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(i,}\StringTok{"is even."}\NormalTok{))}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(i,}\StringTok{"is odd."}\NormalTok{))}
+\NormalTok{  \} }
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "1 is odd."
+## [1] "2 is even."
+## [1] "3 is odd."
+## [1] "4 is even."
+## [1] "5 is odd."
+## [1] "6 is even."
+## [1] "7 is odd."
+## [1] "8 is even."
+## [1] "9 is odd."
+## [1] "10 is even."
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{\textbf{\emph{\texttt{while}}} Loops in
+\texttt{R}}
+
+\begin{itemize}
+\tightlist
+\item
+  The general form is:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{while}\NormalTok{(logical test)\{}
+\NormalTok{  do some stuff until logical test becomes false}
+\NormalTok{\} }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  For example:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ControlFlowTok{while}\NormalTok{(money }\OperatorTok{>}\StringTok{ }\ErrorTok{$}\DecValTok{0}\NormalTok{)\{}
+  \KeywordTok{eat}\NormalTok{(food)}
+\NormalTok{  money <-}\StringTok{ }\NormalTok{money }\OperatorTok{-}\StringTok{ }\KeywordTok{cost}\NormalTok{(food)}
+\NormalTok{\} }
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  When does the loop end? What happens if food is free?
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Example in \texttt{R}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x <-}\StringTok{ }\DecValTok{0}
+\NormalTok{limit <-}\StringTok{ }\DecValTok{10}
+\ControlFlowTok{while}\NormalTok{(x }\OperatorTok{<=}\StringTok{ }\NormalTok{limit)\{}
+\NormalTok{  x <-}\StringTok{ }\NormalTok{x }\OperatorTok{+}\StringTok{ }\DecValTok{2}
+  \KeywordTok{print}\NormalTok{(x)}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 2
+## [1] 4
+## [1] 6
+## [1] 8
+## [1] 10
+## [1] 12
+\end{verbatim}
+
+How many iterations does this loop go through?
+
+\end{frame}
+
+\begin{frame}[fragile]{An example with \texttt{while}, \texttt{if}, and
+\texttt{else}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{i <-}\StringTok{ }\DecValTok{1}
+\ControlFlowTok{while}\NormalTok{(i }\OperatorTok{<=}\StringTok{ }\DecValTok{10}\NormalTok{)\{}
+  \ControlFlowTok{if}\NormalTok{(i }\OperatorTok{%%}\StringTok{ }\DecValTok{2} \OperatorTok{==}\StringTok{ }\DecValTok{0}\NormalTok{)\{ }
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(i,}\StringTok{"is even."}\NormalTok{))}
+\NormalTok{  \} }\ControlFlowTok{else}\NormalTok{ \{}
+    \KeywordTok{print}\NormalTok{(}\KeywordTok{paste}\NormalTok{(i,}\StringTok{"is odd."}\NormalTok{))}
+\NormalTok{  \} }
+\NormalTok{  i <-}\StringTok{ }\NormalTok{i }\OperatorTok{+}\StringTok{ }\DecValTok{1}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "1 is odd."
+## [1] "2 is even."
+## [1] "3 is odd."
+## [1] "4 is even."
+## [1] "5 is odd."
+## [1] "6 is even."
+## [1] "7 is odd."
+## [1] "8 is even."
+## [1] "9 is odd."
+## [1] "10 is even."
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Your turn!}
+
+\begin{itemize}
+\tightlist
+\item
+  Work on class20.R and/or class19.R.
+\end{itemize}
+
+Here are the commands/operators we covered today:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{for,\ if,\ else}
+\item
+  \texttt{in,\ print,\ sample}
+\end{itemize}
+
+\end{frame}
+
+\end{document}

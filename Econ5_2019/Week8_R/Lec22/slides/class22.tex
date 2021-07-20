@@ -1,0 +1,507 @@
+\documentclass[ignorenonframetext,]{beamer}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+
+\usetheme{CambridgeUS}
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+\setbeamertemplate{itemize items}{\color{UBCblue}$\blacktriangleright$}
+
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+\ifxetex
+\usepackage{mathspec}
+\else
+\usepackage{fontspec}
+\fi
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+	\usepackage{microtype}
+	\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\newif\ifbibliography
+\hypersetup{
+	pdfauthor={UCSD},
+	pdfborder={0 0 0},
+	breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight0.8\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+
+\AtBeginPart{
+	\let\insertpartnumber\relax
+	\let\partname\relax
+	\frame{\partpage}
+}
+\AtBeginSection{
+	\ifbibliography
+	\else
+	\let\insertsectionnumber\relax
+	\let\sectionname\relax
+	\frame{\sectionpage}
+	\fi
+}
+\AtBeginSubsection{
+	\let\insertsubsectionnumber\relax
+	\let\subsectionname\relax
+	\frame{\subsectionpage}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+	\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+
+\title[Class 22]{Introduction to Social Data Analytics\\
+	Class 22}
+\author[]{}
+\institute[UCSD]{}
+\date[]{}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}{Today: Plotting in \texttt{R}}
+
+By the end of today's lecture, you should be able to:
+
+\begin{itemize}
+\tightlist
+\item
+  Create the following plots in R: barplot, histogram, boxplot, line
+  plots, and scatter plots
+\item
+  Recall how to generate tables and which plots require tables as inputs
+\item
+  Add elements to plots: titles, axis labels, ablines, text, colors,
+  etc.
+\item
+  Interpret elements of plots after creating them (e.g.~quartiles in box
+  plots)
+\end{itemize}
+
+Open class22.R if you haven't already and fill-in as we go.
+
+\end{frame}
+
+\begin{frame}[fragile]{On your own, load afghan.csv and explore the
+data}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{names}\NormalTok{(afghan)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##  [1] "province"            "district"            "village.id"         
+##  [4] "age"                 "educ.years"          "employed"           
+##  [7] "income"              "violent.exp.ISAF"    "violent.exp.taliban"
+## [10] "list.group"          "list.response"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(afghan}\OperatorTok{$}\NormalTok{violent.exp.ISAF)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "integer"
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(afghan}\OperatorTok{$}\NormalTok{violent.exp.ISAF)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA's 
+##  0.0000  0.0000  0.0000  0.3749  1.0000  1.0000      25
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{What's the difference between \texttt{table} vs.
+\texttt{prop.table}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ISAF.table <-}\StringTok{ }\KeywordTok{table}\NormalTok{(afghan}\OperatorTok{$}\NormalTok{violent.exp.ISAF, }
+                    \DataTypeTok{exclude =} \OtherTok{NULL}\NormalTok{)}
+\NormalTok{ISAF.table}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##    0    1 <NA> 
+## 1706 1023   25
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{ISAF.ptable <-}\StringTok{ }\KeywordTok{prop.table}\NormalTok{(}\KeywordTok{table}\NormalTok{(afghan}\OperatorTok{$}\NormalTok{violent.exp.ISAF,}
+                    \DataTypeTok{exclude =} \OtherTok{NULL}\NormalTok{))}
+\NormalTok{ISAF.ptable}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+##           0           1        <NA> 
+## 0.619462600 0.371459695 0.009077705
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Create a barplot of the \textit{percent}
+victimized by ISAF}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{barplot}\NormalTok{(ISAF.ptable,}
+        \DataTypeTok{names.arg =} \KeywordTok{c}\NormalTok{(}\StringTok{"No harm"}\NormalTok{, }\StringTok{"Harm"}\NormalTok{, }\StringTok{"Nonresponse"}\NormalTok{), }
+        \DataTypeTok{main =} \StringTok{"Civilian victimization by the ISAF"}\NormalTok{,}
+        \DataTypeTok{xlab =} \StringTok{"Response category"}\NormalTok{,}
+        \DataTypeTok{ylab =} \StringTok{"Proportion of the respondents"}\NormalTok{, }
+        \DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.7}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Your barplot should look like this.}
+
+\includegraphics{class22_files/figure-beamer/unnamed-chunk-5-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Your turn! Create a barplot for \texttt{afghan\$violent.exp.taliban}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Create a histogram of respondent ages}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{hist}\NormalTok{(afghan}\OperatorTok{$}\NormalTok{age, }\DataTypeTok{freq =} \OtherTok{FALSE}\NormalTok{, }
+     \DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FloatTok{0.04}\NormalTok{), }
+     \DataTypeTok{xlab =} \StringTok{"Age"}\NormalTok{, }
+     \DataTypeTok{ylab =} \StringTok{"Percent"}\NormalTok{,}
+     \DataTypeTok{main =} \StringTok{"Distribution of Respondent Age"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Your histogram should look like this}
+
+\includegraphics{class22_files/figure-beamer/unnamed-chunk-7-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  See if you can do the same for \texttt{afghan\$educ.years} (Notice
+  \texttt{breaks()})
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Suppose you want to add a vertical line though
+the median\ldots{}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Add a vertical line at the median education level }
+\CommentTok{# using abline()}
+\KeywordTok{abline}\NormalTok{(}\DataTypeTok{v =} \KeywordTok{median}\NormalTok{(afghan}\OperatorTok{$}\NormalTok{educ.years))}
+
+\CommentTok{# Add a text label "median" at (x, y) = (3, 0.5)}
+\KeywordTok{text}\NormalTok{(}\DataTypeTok{x =} \DecValTok{3}\NormalTok{, }\DataTypeTok{y =} \FloatTok{0.5}\NormalTok{, }\StringTok{"median"}\NormalTok{)}
+
+\CommentTok{# Add a vertical line at the mean using lines()}
+\KeywordTok{lines}\NormalTok{(}\DataTypeTok{x =} \KeywordTok{rep}\NormalTok{(}\KeywordTok{mean}\NormalTok{(afghan}\OperatorTok{$}\NormalTok{educ.years), }\DecValTok{2}\NormalTok{), }
+      \DataTypeTok{y =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{100}\NormalTok{, }\DecValTok{1500}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Try to add a text label ``mean'' in an appropriate place.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Can we create a histogram for
+\texttt{afghan\$income}? Why or why not?}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(afghan}\OperatorTok{$}\NormalTok{income)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   10,001-20,000    2,001-10,000   20,001-30,000 less than 2,000 
+##             616            1420              93             457 
+##     over 30,000            NA's 
+##              14             154
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{class}\NormalTok{(afghan}\OperatorTok{$}\NormalTok{income)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "factor"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Make a box plot of years of education separated
+by province}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{boxplot}\NormalTok{(educ.years }\OperatorTok{~}\StringTok{ }\NormalTok{province, }
+        \DataTypeTok{data =}\NormalTok{ afghan, }
+        \DataTypeTok{main =} \StringTok{"Education by Province"}\NormalTok{, }
+        \DataTypeTok{xlab =} \StringTok{"Province"}\NormalTok{,}
+        \DataTypeTok{ylab =} \StringTok{"Years of Education"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}{Which provinces are the most educated?}
+
+\includegraphics{class22_files/figure-beamer/unnamed-chunk-11-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Make a boxplot of age separated by each district.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Now load congress.csv and explore the data on
+your own}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{congress <-}\StringTok{ }\KeywordTok{read.csv}\NormalTok{(}\StringTok{"congress.csv"}\NormalTok{)}
+\KeywordTok{head}\NormalTok{(congress, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##   congress district   state    party       name dwnom1 dwnom2
+## 1       80        0     USA Democrat     TRUMAN -0.276  0.016
+## 2       80        1 ALABAMA Democrat BOYKIN  F. -0.026  0.796
+## 3       80        2 ALABAMA Democrat  GRANT  G. -0.042  0.999
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Subsetting has been done for you.}
+
+\begin{itemize}
+\tightlist
+\item
+  What is \texttt{rep80}?
+\item
+  What is \texttt{dem112}?
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{summary}\NormalTok{(rep80)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##     congress     district         state            party    
+##  Min.   :80   Min.   : 1.00   NEW YOR: 28   Democrat  :  0  
+##  1st Qu.:80   1st Qu.: 3.00   PENNSYL: 28   Other     :  0  
+##  Median :80   Median : 7.00   ILLINOI: 20   Republican:250  
+##  Mean   :80   Mean   :12.00   OHIO   : 20                   
+##  3rd Qu.:80   3rd Qu.:14.75   MICHIGA: 15                   
+##  Max.   :80   Max.   :99.00   CALIFOR: 14                   
+##                               (Other):125                   
+##         name         dwnom1            dwnom2       
+##  COLE  W. :  2   Min.   :-0.2320   Min.   :-1.0020  
+##  PHILLIPS :  2   1st Qu.: 0.1810   1st Qu.:-0.5833  
+##  ALLEN  J.:  1   Median : 0.2660   Median :-0.3595  
+##  ALLEN  L.:  1   Mean   : 0.2757   Mean   :-0.3782  
+##  ANDERSEN :  1   3rd Qu.: 0.3568   3rd Qu.:-0.1750  
+##  ANDERSON :  1   Max.   : 1.2290   Max.   : 0.3730  
+##  (Other)  :242
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Create a scatter plot demonstrating ideological
+division}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DataTypeTok{type =} \StringTok{"n"}\NormalTok{, }\CommentTok{# Type "n" specifies no plotting}
+     \DataTypeTok{xlim =}\NormalTok{ lim, }
+     \DataTypeTok{ylim =}\NormalTok{ lim, }
+     \DataTypeTok{xlab =}\NormalTok{ xlab, }
+     \DataTypeTok{ylab =}\NormalTok{ ylab,}
+     \DataTypeTok{main =} \StringTok{"80th Congress"}\NormalTok{)}
+\KeywordTok{points}\NormalTok{(dem80}\OperatorTok{$}\NormalTok{dwnom1, dem80}\OperatorTok{$}\NormalTok{dwnom2, }
+       \DataTypeTok{pch =} \DecValTok{16}\NormalTok{, }\DataTypeTok{col =} \StringTok{"blue"}\NormalTok{) }\CommentTok{# democrats}
+\KeywordTok{points}\NormalTok{(rep80}\OperatorTok{$}\NormalTok{dwnom1, rep80}\OperatorTok{$}\NormalTok{dwnom2, }
+       \DataTypeTok{pch =} \DecValTok{17}\NormalTok{, }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{) }\CommentTok{# republicans}
+\KeywordTok{text}\NormalTok{(}\OperatorTok{-}\FloatTok{0.75}\NormalTok{, }\DecValTok{1}\NormalTok{, }\StringTok{"Democrats"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(}\DecValTok{1}\NormalTok{, }\OperatorTok{-}\DecValTok{1}\NormalTok{, }\StringTok{"Republicans"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}{Your scatter plot should look like this}
+
+\includegraphics{class22_files/figure-beamer/unnamed-chunk-16-1.pdf}
+
+\begin{itemize}
+\tightlist
+\item
+  Create the same plot for the 112th congress
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Now we create line plots showing ideology change
+over time}
+
+\begin{itemize}
+\tightlist
+\item
+  First, let's generate vectors of median ideology vs time for each
+  party
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# Calculate party median for each congress}
+\NormalTok{dem.median <-}\StringTok{ }\KeywordTok{tapply}\NormalTok{(dem}\OperatorTok{$}\NormalTok{dwnom1, dem}\OperatorTok{$}\NormalTok{congress, median)}
+\NormalTok{rep.median <-}\StringTok{ }\KeywordTok{tapply}\NormalTok{(rep}\OperatorTok{$}\NormalTok{dwnom1, rep}\OperatorTok{$}\NormalTok{congress, median)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Now we can plot lines}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{plot}\NormalTok{(}\KeywordTok{names}\NormalTok{(dem.median), dem.median, }
+     \DataTypeTok{col =} \StringTok{"blue"}\NormalTok{, }
+     \DataTypeTok{type =} \StringTok{"l"}\NormalTok{,}
+     \DataTypeTok{xlim =} \KeywordTok{c}\NormalTok{(}\DecValTok{80}\NormalTok{, }\DecValTok{115}\NormalTok{), }
+     \DataTypeTok{ylim =} \KeywordTok{c}\NormalTok{(}\OperatorTok{-}\DecValTok{1}\NormalTok{, }\DecValTok{1}\NormalTok{), }
+     \DataTypeTok{xlab =} \StringTok{"Congress"}\NormalTok{,}
+     \DataTypeTok{ylab =} \StringTok{"Median ideological leaning of party"}\NormalTok{)}
+\KeywordTok{lines}\NormalTok{(}\KeywordTok{names}\NormalTok{(rep.median), rep.median, }\DataTypeTok{col =} \StringTok{"red"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(}\DecValTok{110}\NormalTok{, }\OperatorTok{-}\FloatTok{0.6}\NormalTok{, }\StringTok{"Democratic}\CharTok{\textbackslash{}n}\StringTok{ Party"}\NormalTok{)}
+\KeywordTok{text}\NormalTok{(}\DecValTok{110}\NormalTok{, }\FloatTok{0.85}\NormalTok{, }\StringTok{"Republican}\CharTok{\textbackslash{}n}\StringTok{ Party"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}{Does your plot look like this?}
+
+\includegraphics{class22_files/figure-beamer/unnamed-chunk-19-1.pdf}
+
+\end{frame}
+
+\end{document}

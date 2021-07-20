@@ -1,0 +1,235 @@
+---
+title: |
+  | Introduction to Social Data Analytics
+  | Class 22
+author: ""
+date: ""
+output:
+  beamer_presentation:
+    keep_tex: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Today: Plotting in ```R```
+
+By the end of today's lecture, you should be able to:
+
+- Create the following plots in R: barplot, histogram, boxplot, line plots, and scatter plots
+- Recall how to generate tables and which plots require tables as inputs
+- Add elements to plots: titles, axis labels, ablines, text, colors, etc.
+- Interpret elements of plots after creating them (e.g. quartiles in box plots)
+
+Open class22.R if you haven't already and fill-in as we go.
+
+## On your own, load afghan.csv and explore the data
+```{r, echo = FALSE} 
+afghan <- read.csv("afghan.csv")
+```
+
+```{r, echo = TRUE, eval = TRUE}
+names(afghan)
+class(afghan$violent.exp.ISAF)
+summary(afghan$violent.exp.ISAF)
+```
+
+## What's the difference between ```table``` vs. ```prop.table```
+
+```{r, echo = TRUE, eval = TRUE}
+ISAF.table <- table(afghan$violent.exp.ISAF, 
+                    exclude = NULL)
+ISAF.table
+ISAF.ptable <- prop.table(table(afghan$violent.exp.ISAF,
+                    exclude = NULL))
+ISAF.ptable
+```
+
+## Create a barplot of the \textit{percent} victimized by ISAF
+
+```{r, echo = TRUE, eval = FALSE}
+barplot(ISAF.ptable,
+        names.arg = c("No harm", "Harm", "Nonresponse"), 
+        main = "Civilian victimization by the ISAF",
+        xlab = "Response category",
+        ylab = "Proportion of the respondents", 
+        ylim = c(0, 0.7))
+```
+
+## Your barplot should look like this.
+
+```{r, echo = FALSE, eval = TRUE}
+barplot(ISAF.ptable,
+        names.arg = c("No harm", "Harm", "Nonresponse"), 
+        main = "Civilian victimization by the ISAF",
+        xlab = "Response category",
+        ylab = "Proportion of the respondents", 
+        ylim = c(0, 0.7))
+```
+
+- Your turn! Create a barplot for ```afghan$violent.exp.taliban```
+
+## Create a histogram of respondent ages
+```{r, echo = TRUE, eval = FALSE}
+hist(afghan$age, freq = FALSE, 
+     ylim = c(0, 0.04), 
+     xlab = "Age", 
+     ylab = "Percent",
+     main = "Distribution of Respondent Age")
+```
+
+## Your histogram should look like this
+```{r, echo = FALSE, eval = TRUE}
+hist(afghan$age, freq = FALSE, 
+     ylim = c(0, 0.04), 
+     xlab = "Age", 
+     ylab = "Percent",
+     main = "Distribution of Respondent Age")
+```
+
+- See if you can do the same for ```afghan$educ.years``` (Notice ```breaks()```)
+
+## Suppose you want to add a vertical line though the median...
+
+```{r, echo = TRUE, eval = FALSE}
+# Add a vertical line at the median education level 
+# using abline()
+abline(v = median(afghan$educ.years))
+
+# Add a text label "median" at (x, y) = (3, 0.5)
+text(x = 3, y = 0.5, "median")
+
+# Add a vertical line at the mean using lines()
+lines(x = rep(mean(afghan$educ.years), 2), 
+      y = c(-100, 1500))
+
+```
+
+- Try to add a text label "mean" in an appropriate place.
+
+## Can we create a histogram for ```afghan$income```? Why or why not?
+
+```{r, echo = TRUE}
+summary(afghan$income)
+class(afghan$income)
+```
+
+## Make a box plot of years of education separated by province
+```{r, echo = TRUE, eval = FALSE}
+boxplot(educ.years ~ province, 
+        data = afghan, 
+        main = "Education by Province", 
+        xlab = "Province",
+        ylab = "Years of Education")
+```
+
+## Which provinces are the most educated?
+```{r, echo = FALSE, eval = TRUE}
+boxplot(educ.years ~ province, 
+        data = afghan, 
+        main = "Education by Province", 
+        xlab = "Province",
+        ylab = "Years of Education")
+```
+
+- Make a boxplot of age separated by each district.
+
+## Now load congress.csv and explore the data on your own 
+```{r, echo = TRUE}
+congress <- read.csv("congress.csv")
+head(congress, 3)
+```
+
+## Subsetting has been done for you.
+```{r, echo = FALSE, echo = FALSE}
+rep <- subset(congress, subset = (party == "Republican"))
+dem <- congress[congress$party == "Democrat", ] # alternative method
+
+# Further subset the data by party and by 80th and 112th congress
+rep80 <- subset(rep, subset = (congress == 80))
+dem80 <- subset(dem, subset = (congress == 80))
+rep112 <- subset(rep, subset = (congress == 112))
+dem112 <- subset(dem, subset = (congress == 112))
+
+# Assign axis labels and limits to avoid repetition
+xlab <- "Economic liberalism/conservatism"
+ylab <- "Racial liberalism/conservatism"
+lim <- c(-1.5, 1.5)
+```
+
+- What is ```rep80```?
+- What is ```dem112```?
+```{r, echo = TRUE}
+summary(rep80)
+```
+
+## Create a scatter plot demonstrating ideological division
+```{r, echo = TRUE, eval = FALSE}
+plot(1, type = "n", # Type "n" specifies no plotting
+     xlim = lim, 
+     ylim = lim, 
+     xlab = xlab, 
+     ylab = ylab,
+     main = "80th Congress")
+points(dem80$dwnom1, dem80$dwnom2, 
+       pch = 16, col = "blue") # democrats
+points(rep80$dwnom1, rep80$dwnom2, 
+       pch = 17, col = "red") # republicans
+text(-0.75, 1, "Democrats")
+text(1, -1, "Republicans")
+```
+
+## Your scatter plot should look like this
+```{r, echo = FALSE, eval = TRUE}
+plot(1, type = "n", # Type "n" specifies no plotting
+     xlim = lim, 
+     ylim = lim, 
+     xlab = xlab, 
+     ylab = ylab,
+     main = "80th Congress")
+points(dem80$dwnom1, dem80$dwnom2, pch = 16, col = "blue") # democrats
+points(rep80$dwnom1, rep80$dwnom2, pch = 17, col = "red") # republicans
+text(-0.75, 1, "Democrats")
+text(1, -1, "Republicans")
+```
+
+- Create the same plot for the 112th congress
+
+## Now we create line plots showing ideology change over time
+- First, let's generate vectors of median ideology vs time for each party
+```{r, echo = TRUE}
+# Calculate party median for each congress
+dem.median <- tapply(dem$dwnom1, dem$congress, median)
+rep.median <- tapply(rep$dwnom1, rep$congress, median)
+```
+
+## Now we can plot lines
+
+```{r, echo = TRUE, eval = FALSE}
+plot(names(dem.median), dem.median, 
+     col = "blue", 
+     type = "l",
+     xlim = c(80, 115), 
+     ylim = c(-1, 1), 
+     xlab = "Congress",
+     ylab = "Median ideological leaning of party")
+lines(names(rep.median), rep.median, col = "red")
+text(110, -0.6, "Democratic\n Party")
+text(110, 0.85, "Republican\n Party")
+```
+
+## Does your plot look like this?
+
+```{r, echo = FALSE, eval = TRUE}
+plot(names(dem.median), dem.median, 
+     col = "blue", 
+     type = "l",
+     xlim = c(80, 115), 
+     ylim = c(-1, 1), 
+     xlab = "Congress",
+     ylab = "Median ideological leaning of party")
+lines(names(rep.median), rep.median, col = "red")
+text(110, -0.6, "Democratic\n Party")
+text(110, 0.85, "Republican\n Party")
+```

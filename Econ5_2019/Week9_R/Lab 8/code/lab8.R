@@ -1,0 +1,114 @@
+# Econ 5/Poli 5D, Lab 8
+# In-class Activity
+# 
+# Instructions: Below is some partially completed code. Using the comments as a 
+# guide, finish the code. Remember to use help() if you cannot remember how a 
+# function works, for example, help("mean"). Feel free to ask questions and
+# help your classmates. 
+################################################################################
+
+# Clear everything in memory
+rm(list=ls())
+
+# Change directory
+setwd("")
+
+# Read in Time use data
+load("AmericanTimeUse.RData")
+
+#--------------------------------------------------------------------
+## Part 1: Create a basic calculator
+# Your job is to construct a function 'do.math' with inputs operation, number1, number2.
+#     do.math takes number1 and applies operation to number2 and outputs the result.
+#     For example, do.math("add", 3, 4) should output 7,
+#     and do.math("multiply", 3, 4) should output 12. Other operation values can be "subtract"
+#     or "divide". Fill in the blanks below to complete the function 'do.math'.
+do.math <- _(_, _, _){
+  if(_ == "add"){
+    _ <- _ + _
+  } else if(_ == "subtract"){
+    _ <- _ - _
+  } else if(operation == "multiply"){
+    _ <- _ * _
+  } else if(operation == "divide"){
+    _ <- _ / _
+  } else {
+    _ <- "error: unrecognized operation"
+  }
+  _(_)
+}
+
+# Once you've defined 'do.math', test it with the following:
+do.math("add", 3, 4)
+do.math("subtract", 3, 4)
+do.math("multiply", 3, 4)
+do.math("divide", 3, 4)
+do.math("other", 3, 4)
+
+#--------------------------------------------------------------------
+## Part 2: Functions with defaults
+# NEW MATERIAL
+# You can set a default value for function inputs. Example:
+# function.example <- funtion(a, b, c = 0)
+#     In this example, the default value for c is zero. So if someone runs
+#     function.example(1, 2), which does not specify a value for c, then
+#     the function lets c be zero. However, if someone was to run 
+#     function.example(1, 2, 3), then the function would treat c as 3.
+
+function.example <- function(a, b, c = 0){
+  result <- a + b - c
+  return(result)
+}
+
+function.example(1, 2)
+function.example(1, 2, 3)
+
+
+# Your job is to construct a new function 'do.math2' that is the same as 
+#   'do.math' except it assumes the user wants to do addition if the 
+#   operation is unspecified. Copy your answer from above to the space below 
+#   and make changes as necessary. 
+# Hint: you'll need to change the order of your inputs!
+
+do.math2 <- 
+
+  
+# Test your function with the following:
+do.math2(3, 4) # should result in 7
+do.math2(operation = "subtract", 3, 4)
+do.math2("subtract", 3, 4)
+do.math2(3, 4, "subtract")
+
+
+#--------------------------------------------------------------------
+## Part 3: Functions with data
+# Your job is to construct a function 'mean.day' that takes inputs variable, data, and days.of.week.
+#     'mean.day' returns the mean(data$variable) for the specified days of week. However, the 
+#     day of week is not required, so if days.of.week is omitted, the function should produce 
+#     the mean(data$variable) for all seven days of the week.
+# Note 1: days.of.week should be a number in the range 1:7 (1 is Sunday and 7 is Saturday)
+# Note 2: 'TUDIARYDAY' is the relevant day-of-week variable in the data frame 'time'.
+# Hint: You can set a default value to missing and check if something is missing with is.na().
+
+mean.day <-
+
+mean.day("work", time)
+mean.day("work", time, 1)
+mean.day("work", time, 2)
+mean.day("work", time, 6)
+mean.day("work", time, 7)
+
+
+# BONUS: Adjust your function 'mean.day' to permit days.of.week to be a vector, and take the 
+#     mean over all days specified in that vector. So, if I wanted to calculate the mean of 
+#     hours worked Monday through Friday, I'd use mean.day.2("work", time, 2:6).
+# Hint: use a for loop, and use length(days.of.week) to know how many iterations to include.
+
+mean.day.2 <- 
+
+mean.day.2("work", time)
+mean.day.2("work", time, 1)
+mean.day.2("work", time, 2)
+mean.day.2("work", time, 2:6)
+mean.day.2("work", time, c(1, 7))
+mean.day.2("work", time, 1:7)

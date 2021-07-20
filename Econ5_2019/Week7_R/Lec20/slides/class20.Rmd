@@ -1,0 +1,210 @@
+---
+title: |
+  | Introduction to Social Data Analytics
+  | Class 20
+author: ""
+date: ""
+output:
+  beamer_presentation:
+    keep_tex: true
+---
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Today: more practice with loops
+
+By the end of today's lecture, you should be able to:
+
+- Build loops that utilize the 'counter' (e.g. i) in three ways:
+    - As a number for calculations
+    - As a subset index
+    - As an element of a vector (of strings or numbers)
+- Construct ```while``` loops that may include conditional statements
+
+Open class20.R if you haven't already. 
+
+
+## Tools in your loop toolbox
+
+- ```for```, ```if```, ```else```, and (soon) ```while```
+- Using ```i``` as a number itself
+- Using ```i``` to subset data
+- Using ```i``` as an element of a vector
+
+## The problem: no ```year``` vector
+
+From pre class exercise: 
+
+- Suppose I have data on the US population from 1790 - 1970
+- But I don't have a ```year``` vector
+```{r, echo = TRUE, eval = TRUE}
+data(uspop)
+summary(uspop)
+n <- length(uspop)
+```
+- How could I generate a ```year``` vector using loops?
+
+## Option 1: use ```i``` as a number itself
+```{r, echo = TRUE, eval = FALSE}
+for(i in 1:n){
+  print(1780 + 10*i)
+}
+```
+
+## Option 1: use ```i``` as a number itself
+```{r, echo = TRUE, eval = TRUE}
+for(i in 1:n){
+  print(1780 + 10*i)
+}
+```
+
+
+## Option 2: use ```i``` to subset data
+```{r, echo = TRUE, eval = FALSE}
+year <- rep(NA, n)
+for(i in 1:n){
+  year[i] <- 1780 + 10*i
+  print(year[i])
+}
+```
+
+## Option 2: use ```i``` to subset data
+```{r, echo = TRUE, eval = TRUE}
+year <- rep(NA, n)
+for(i in 1:n){
+  year[i] <- 1780 + 10*i
+  print(year[i])
+}
+```
+
+## Option 3: ```i``` as an element of a vector
+```{r, echo = TRUE, eval = FALSE}
+year <- seq(1790, 1970, 10)
+for(i in year){
+  print(i)
+}
+```
+- This use is useful when ```i``` refers to an element of a vector of text strings
+
+## Option 3: ```i``` as an element of a vector
+```{r, echo = TRUE, eval = TRUE}
+year <- seq(1790, 1970, 10)
+for(i in year){
+  print(i)
+}
+```
+
+## Third use with a vector of text strings
+```{r, echo = TRUE, eval = TRUE}
+instructors <- c("Arushi", "Cameron", "Duy", 
+                 "Mitch", "Zack")
+for(i in instructors){
+  print(paste(i,"is an instructor."))
+}
+```
+
+## An example with ```for```, ```if```, and ```else```
+- For each number ```i``` in 1:10, output whether ```i``` is even.
+- To do this, we will use ```if``` statements within a ```for``` loop.
+- First, let's introduce ```%%``` and ```paste()```:
+```{r, echo = TRUE}
+7 %% 5
+remainder <- 7 %% 5
+paste(remainder,"is the remainder")
+```
+
+## An example with ```for```, ```if```, and ```else```
+Step 1:
+
+- Write the ```if``` statements needed to test whether a number ```i``` is even
+- If it is even, output the number and "is even."
+- If it is odd, output the number and "is odd"
+
+## An example with ```for```, ```if```, and ```else```
+```{r, echo = TRUE, eval = FALSE}
+
+  if(i %% 2 == 0){ 
+    print(paste(i,"is even."))
+  } else {
+    print(paste(i,"is odd."))
+  } 
+
+```
+- Now do Step 2: add the ```for``` loop so that the commands above are performed over all values in 1:10
+
+## An example with ```for```, ```if```, and ```else```
+```{r, echo = TRUE, eval = FALSE}
+for(i in 1:10){
+  if(i %% 2 == 0){ 
+    print(paste(i,"is even."))
+  } else {
+    print(paste(i,"is odd."))
+  } 
+}
+```
+
+## An example with ```for```, ```if```, and ```else```
+```{r, echo = TRUE}
+for(i in 1:10){
+  if(i %% 2 == 0){ 
+    print(paste(i,"is even."))
+  } else {
+    print(paste(i,"is odd."))
+  } 
+}
+
+```
+
+## ***```while```*** Loops in ```R```
+
+- The general form is: 
+```{r, echo = TRUE, eval = FALSE}
+while(logical test){
+  do some stuff until logical test becomes false
+} 
+```
+- For example:
+```{r, echo = TRUE, eval = FALSE}
+while(money > $0){
+  eat(food)
+  money <- money - cost(food)
+} 
+```
+- When does the loop end? What happens if food is free?
+
+## Example in ```R```
+```{r, echo = TRUE}
+x <- 0
+limit <- 10
+while(x <= limit){
+  x <- x + 2
+  print(x)
+}
+```
+How many iterations does this loop go through?
+
+## An example with ```while```, ```if```, and ```else```
+```{r, echo = TRUE}
+i <- 1
+while(i <= 10){
+  if(i %% 2 == 0){ 
+    print(paste(i,"is even."))
+  } else {
+    print(paste(i,"is odd."))
+  } 
+  i <- i + 1
+}
+
+```
+
+## Your turn!
+- Work on class20.R and/or class19.R. 
+
+Here are the new commands/operators we covered today:
+
+- ```while```
+- ```%%```
+- ```paste```

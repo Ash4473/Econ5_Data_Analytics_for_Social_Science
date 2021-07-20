@@ -1,0 +1,154 @@
+---
+title: |
+  | Introduction to Social Data Analytics
+  | Class 19
+author: ""
+date: ""
+output:
+  beamer_presentation:
+    keep_tex: true
+---
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Today: loops
+
+By the end of today's lecture, you should be able to:
+
+- Construct conditional statements and for loops in ```R```
+- Describe how loops can reduce coding necessary to accomplish data analysis
+- Define "iteration" and give examples of how the "counter" can be used within a for loop
+- Recall from the Excel lectures how to use the \texttt{if} operator and describe the syntax in \texttt{R}
+
+
+Open class19.R if you haven't already. 
+
+## ***```if```*** statements in ```R```
+- The general form is: 
+```{r, echo = TRUE, eval = FALSE}
+if(logical test) {
+  do some stuff when logical test is TRUE
+} 
+```
+- For example:
+```{r, echo = TRUE, eval = FALSE}
+if(locked(door) == 1) {
+  unlock(door)
+} 
+```
+- As in Stata, the action only takes place when the if statement is true.
+
+## Example in ```R```
+```{r, echo = TRUE}
+x <- sample(-1:1, 1) # random draw from {-1, 0, 1}
+x
+if (x > 0) {
+  print("x is positive")
+}
+```
+
+## Learn this...or ***```else```***!
+- Use ```else``` to add conditions to an ```if``` statement: 
+```{r, echo = TRUE, eval = FALSE}
+if(logical test) {
+  do some stuff when logical test is TRUE
+} else {
+  do some stuff when logical test is FALSE
+}
+```
+- For example:
+```{r, echo = TRUE, eval = FALSE}
+if(locked(door) == 1) {
+  unlock(door)
+  open(door)
+} else {
+  open(door)
+}
+```
+
+## Example in ```R```
+```{r, echo = TRUE}
+x <- sample(-1:1, 1)
+x
+if (x > 0) {
+  print("x is positive")
+} else { 
+  print("x is negative")
+}
+```
+
+## What about zero?
+```{r, echo = TRUE}
+x <- sample(-1:1, 1)
+x
+if (x > 0) {
+  print("x is positive")
+} else if (x < 0) { 
+  print("x is negative")  
+} else {
+  print("x is zero")
+}
+```
+
+## Takeaways from combining ```if``` and ```else```
+- You do not specify the criterea for the ```else``` part
+- These statements are \textit{exhaustive}: they check \alert{all} possible cases 
+- Make sure the ```else``` shows up on the same line as the prior closed bracket
+
+## What is a loop?
+
+- A sequence of commands to be repeated
+- You do various sorts of loops in your daily life
+```{r, echo = TRUE, eval = FALSE}
+for(i in 1:length(homework)){
+  do(homework[i])
+  homework[i] <- 0
+}
+if(sum(homework)) == 0 {
+  watch(Netflix)
+}
+```
+- In ```R```, they are helpful for tasks you would like repeated, where typing repeatedly would be cumbersome.
+
+## ***```for```*** Loops in ```R```
+
+- The general form is: 
+```{r, echo = TRUE, eval = FALSE}
+for(some set of things){
+  do some stuff
+} 
+```
+- For example:
+```{r, echo = TRUE, eval = FALSE}
+for(i in c(keys, phone, wallet)){
+  check.on.person(i)
+} 
+```
+- The loop \alert{iterates} through multiple rounds.
+- How many iterations in the example?
+
+## Example in ```R```
+```{r, echo = TRUE}
+x <- 0
+for(i in 1:5){
+  x <- x + 2*i
+  print(x)
+}
+```
+What is the value of ```x``` after the fifth iteration of the loop?
+
+
+## Your turn: practice conditional statements and loops
+Words of wisdom
+
+- Loops are in general slow to compute
+- Faster to use vector/matrix operations
+- Try each problem with loop solutions to start
+
+Here are the commands/operators we covered today:
+
+- ```for, if, else```
+- ```in, print, sample```
