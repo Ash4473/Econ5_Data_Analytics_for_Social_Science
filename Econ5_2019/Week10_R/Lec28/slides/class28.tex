@@ -1,0 +1,788 @@
+\documentclass[ignorenonframetext,]{beamer}
+\setbeamertemplate{caption}[numbered]
+\setbeamertemplate{caption label separator}{: }
+\setbeamercolor{caption name}{fg=normal text.fg}
+\beamertemplatenavigationsymbolsempty
+\usepackage{lmodern}
+\usepackage{amssymb,amsmath}
+\usepackage{ifxetex,ifluatex}
+\usepackage{fixltx2e} % provides \textsubscript
+
+\usetheme{CambridgeUS}
+\definecolor{UBCblue}{rgb}{0.04706, 0.13725, 0.26667}
+\definecolor{UBCgray}{rgb}{0.3686, 0.5255, 0.6235}
+\colorlet{verylightgray}{gray!10}
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=darkgray,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} % TOC sections
+\setbeamercolor{subsection in head/foot}{bg=darkgray,fg=white}
+\setbeamercolor{frametitle}{fg=UBCblue}
+\setbeamercolor{title}{fg=UBCblue, bg=verylightgray}
+\setbeamertemplate{itemize items}{\color{UBCblue}$\blacktriangleright$}
+
+
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\else % if luatex or xelatex
+\ifxetex
+\usepackage{mathspec}
+\else
+\usepackage{fontspec}
+\fi
+\defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
+\fi
+% use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+% use microtype if available
+\IfFileExists{microtype.sty}{%
+	\usepackage{microtype}
+	\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\newif\ifbibliography
+\hypersetup{
+	pdfauthor={UCSD},
+	pdfborder={0 0 0},
+	breaklinks=true}
+\urlstyle{same}  % don't use monospace font for urls
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\usepackage{graphicx,grffile}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight0.8\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+
+% Prevent slide breaks in the middle of a paragraph:
+\widowpenalties 1 10000
+\raggedbottom
+
+\AtBeginPart{
+	\let\insertpartnumber\relax
+	\let\partname\relax
+	\frame{\partpage}
+}
+\AtBeginSection{
+	\ifbibliography
+	\else
+	\let\insertsectionnumber\relax
+	\let\sectionname\relax
+	\frame{\sectionpage}
+	\fi
+}
+\AtBeginSubsection{
+	\let\insertsubsectionnumber\relax
+	\let\subsectionname\relax
+	\frame{\subsectionpage}
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt plus 2pt minus 1pt}
+\setlength{\emergencystretch}{3em}  % prevent overfull lines
+\providecommand{\tightlist}{%
+	\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{0}
+
+
+\title[Class 28]{Introduction to Social Data Analytics\\
+	Class 28}
+\author[Kaushik]{Arushi Kaushik}
+\institute[UCSD]{arkaushi@ucsd.edu}
+%\date[]{}
+
+\begin{document}
+\frame{\titlepage}
+
+\begin{frame}[fragile]{Today: \texttt{dplyr} package}
+
+By the end of today's lecture, you should be able to:
+
+\begin{itemize}
+\tightlist
+\item
+  Download R packages from CRAN (Comprehensive R Archive Network) and load them into your session
+\item
+  Use the \texttt{dplyr} package to accomplish basic data wrangling
+  including:
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Adding and deleting variables and observations
+  \item
+    Sorting, merging and reshaping data
+  \item
+    Collapsing a table to a coarser unit of analysis
+  \end{itemize}
+\end{itemize}
+
+Open class28.R if you haven't already.
+
+\end{frame}
+
+\begin{frame}{What is a package?}
+
+\begin{itemize}
+\tightlist
+\item
+  A package is a collection of R functions, data, and code that expand
+  the capabilities of base R.
+\item
+  Anyone can create a package - there's even a package to help with
+  creating packages.
+\end{itemize}
+
+There are more than 14,000 publicly available packages that you can
+download from the Comprehensive R Archive Network (CRAN).
+
+\end{frame}
+
+\begin{frame}[fragile]{Using a package requires two steps.}
+
+\begin{itemize}
+\tightlist
+\item
+  First, install the package using:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{install.packages}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+You only need to download a package once. It'll remain on your computer
+until you uninstall R.
+
+\begin{itemize}
+\tightlist
+\item
+  Second, load the package using:
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\KeywordTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+You must load a package once per session.
+
+\end{frame}
+
+\begin{frame}[fragile]{Let's create variables with \texttt{mutate()}}
+
+Create a variable \texttt{region\$california\_\ =\ TRUE} if
+\texttt{region\$region\ ==\ "California"}, \texttt{FALSE} otherwise,
+using:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item[1.]
+  the old fashioned way
+\item[2.]
+  the dpylr function `mutate()'
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# a)}
+\NormalTok{region}\OperatorTok{$}\NormalTok{california_a <-}\StringTok{ }\NormalTok{region}\OperatorTok{$}\NormalTok{region }\OperatorTok{==}\StringTok{ "California"}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Let's create variables with \texttt{mutate()}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{# a)}
+\NormalTok{region <-}\StringTok{ }\NormalTok{region }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{california_b =}\NormalTok{ region }\OperatorTok{==}\StringTok{ "California"}\NormalTok{)}
+
+\CommentTok{# compare the two:}
+\KeywordTok{table}\NormalTok{(region}\OperatorTok{$}\NormalTok{california_a, region}\OperatorTok{$}\NormalTok{california_b)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##        
+##         FALSE TRUE
+##   FALSE   292    0
+##   TRUE      0   28
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Your turn:}
+
+Add the variable \texttt{salary\$high} =
+
+\begin{itemize}
+\tightlist
+\item
+  1 if \texttt{salary\_start\_median\ \textgreater{}\ 50000},
+\item
+  0 otherwise
+\end{itemize}
+
+using \texttt{mutate()}.
+
+\end{frame}
+
+\begin{frame}[fragile]{Solution:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{salary <-}\StringTok{ }\NormalTok{salary }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{high =} \KeywordTok{as.numeric}\NormalTok{(salary_start_median }\OperatorTok{>}\StringTok{ }\DecValTok{50000}\NormalTok{))}
+
+\NormalTok{salary[}\DecValTok{6}\OperatorTok{:}\DecValTok{10}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"salary_start_median"}\NormalTok{, }\StringTok{"high"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 2
+##   salary_start_median  high
+##                 <dbl> <dbl>
+## 1               57200     1
+## 2               52600     1
+## 3               51100     1
+## 4               48600     0
+## 5               54800     1
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Multiple functions at once with piping}
+
+One cool aspect of piping is the ability to apply multiple functions at
+once.
+
+Below we apply two functons to the data frame `salary':
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  We add a variable salary\_thousands = salary\_start\_median / 1000
+\item
+  We rename the variable `salary' to `california'
+\end{enumerate}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{salary <-}\StringTok{ }\NormalTok{salary }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{mutate}\NormalTok{(}\DataTypeTok{salary_thousands =}\NormalTok{ salary_start_median}\OperatorTok{/}\DecValTok{1000}\NormalTok{) }\OperatorTok{%>%}
+\StringTok{  }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{salary_90 =}\NormalTok{ salary_midcareer_90th)}
+\end{Highlighting}
+\end{Shaded}
+
+It can be helpful to read the \texttt{\%\textgreater{}\%}s as ``and
+then''.
+
+\end{frame}
+
+\begin{frame}[fragile]{Your turn:}
+
+Rename the variable \texttt{salary\$high} to
+\texttt{salary\$salary\_high} using rename().
+
+\end{frame}
+
+\begin{frame}[fragile]{Solution}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{salary <-}\StringTok{ }\NormalTok{salary }\OperatorTok{%>%}\StringTok{ }\KeywordTok{rename}\NormalTok{(}\DataTypeTok{salary_high =}\NormalTok{ high)}
+\end{Highlighting}
+\end{Shaded}
+
+\end{frame}
+
+\begin{frame}[fragile]{Keeping certain \textit{observations}}
+
+Sometimes we want to subset a data frame that only includes certain
+observations.
+
+\begin{itemize}
+\tightlist
+\item
+  filter() keeps observations that meet logical criteria
+\item
+  distinct() removes observations with duplicate values
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{state_schools <-}\StringTok{ }\NormalTok{type }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(type }\OperatorTok{==}\StringTok{ "State"}\NormalTok{)}
+
+\KeywordTok{head}\NormalTok{(state_schools, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 2
+##   name                            type 
+##   <chr>                           <chr>
+## 1 Appalachian State University    State
+## 2 Arkansas State University (ASU) State
+## 3 Auburn University               State
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Keeping certain \textit{observations}}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{unique_regions <-}\StringTok{ }\NormalTok{region }\OperatorTok{%>%}\StringTok{ }\KeywordTok{distinct}\NormalTok{(region)}
+
+\KeywordTok{head}\NormalTok{(unique_regions)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 1
+##   region      
+##   <chr>       
+## 1 California  
+## 2 Western     
+## 3 Midwestern  
+## 4 Southern    
+## 5 Northeastern
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Your turn:}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item[1.]
+  Create a table called `rich.grads' that contains all observations
+  within `salary' where \texttt{salary\_90\ \textgreater{}\ 200000}. Use
+  \texttt{filter()}.
+\item[2.]
+  Create a table called `unique\_types' that contains one observation
+  per `type' in the data frame `type'. Use \texttt{distinct()}.
+\end{enumerate}
+
+\end{frame}
+
+\begin{frame}[fragile]{Solution:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rich.grads <-}\StringTok{ }\NormalTok{salary }\OperatorTok{%>%}\StringTok{ }\KeywordTok{filter}\NormalTok{(salary_}\DecValTok{90} \OperatorTok{>}\StringTok{ }\DecValTok{200000}\NormalTok{)}
+
+\NormalTok{rich.grads[}\DecValTok{1}\OperatorTok{:}\DecValTok{5}\NormalTok{, }\KeywordTok{c}\NormalTok{(}\StringTok{"name"}\NormalTok{, }\StringTok{"salary_90"}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 2
+##   name                                    salary_90
+##   <chr>                                       <dbl>
+## 1 Stanford University                        257000
+## 2 University of California, Berkeley         201000
+## 3 University of Southern California (USC)    201000
+## 4 University of California, Davis            202000
+## 5 Colorado School of Mines                   201000
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Solution:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{unique_types <-}\StringTok{ }\NormalTok{type }\OperatorTok{%>%}\StringTok{ }\KeywordTok{distinct}\NormalTok{(type)}
+
+\NormalTok{unique_types}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 5 x 1
+##   type        
+##   <chr>       
+## 1 Liberal Arts
+## 2 State       
+## 3 Party       
+## 4 Ivy League  
+## 5 Engineering
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Keeping certain \textit{variables}}
+
+\begin{itemize}
+\tightlist
+\item
+  select() keeps only the variables listed
+\item
+  transmute() keeps only variables listed and allows creation of new
+  variables
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{salary_median <-}\StringTok{ }\NormalTok{salary }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{select}\NormalTok{(name, salary_start_median, salary_midcareer_median)}
+
+\KeywordTok{head}\NormalTok{(salary_median, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 3
+##   name                             salary_start_medi~ salary_midcareer_med~
+##   <chr>                                         <dbl>                 <dbl>
+## 1 Stanford University                           70400                129000
+## 2 California Institute of Technol~              75500                123000
+## 3 Harvey Mudd College                           71800                122000
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Keeping certain variables}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{salary_median_thous <-}\StringTok{ }\NormalTok{salary }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{transmute}\NormalTok{(}\DataTypeTok{name =}\NormalTok{ name, }
+      \DataTypeTok{salary_start_thous =}\NormalTok{ salary_start_median}\OperatorTok{/}\DecValTok{1000}\NormalTok{, }
+      \DataTypeTok{salary_midcareer_thous =}\NormalTok{ salary_midcareer_median}\OperatorTok{/}\DecValTok{1000}\NormalTok{)}
+
+\KeywordTok{head}\NormalTok{(salary_median_thous, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 3
+##   name                              salary_start_thous salary_midcareer_th~
+##   <chr>                                          <dbl>                <dbl>
+## 1 Stanford University                             70.4                  129
+## 2 California Institute of Technolo~               75.5                  123
+## 3 Harvey Mudd College                             71.8                  122
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Your turn:}
+
+Overwrite the table `rich.grads' to only contain the variables:
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{name}\\
+\item
+  \texttt{salary\_90\_thous\ =\ salary\_/1000}.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Solution:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rich.grads <-}\StringTok{ }\NormalTok{rich.grads }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{transmute}\NormalTok{(}\DataTypeTok{name =}\NormalTok{ name, }\DataTypeTok{salary_90_thous =}\NormalTok{ salary_}\DecValTok{90}\OperatorTok{/}\DecValTok{1000}\NormalTok{)}
+
+\KeywordTok{head}\NormalTok{(rich.grads)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 2
+##   name                                    salary_90_thous
+##   <chr>                                             <dbl>
+## 1 Stanford University                                 257
+## 2 University of California, Berkeley                  201
+## 3 University of Southern California (USC)             201
+## 4 University of California, Davis                     202
+## 5 Colorado School of Mines                            201
+## 6 University of Notre Dame                            235
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Sorting data in ascending order}
+
+We can sort data using \texttt{arrange()}.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{salary <-}\StringTok{ }\NormalTok{salary }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(salary_start_median)}
+
+\KeywordTok{head}\NormalTok{(salary, }\DecValTok{3}\NormalTok{) }\CommentTok{# lowest to highest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 9
+##   name  salary_start_me~ salary_midcaree~ salary_midcaree~ salary_midcaree~
+##   <chr>            <dbl>            <dbl>            <dbl>            <dbl>
+## 1 Lee ~            34500            53900               NA            44500
+## 2 Virg~            34600            54900               NA            37100
+## 3 More~            34800            60600            34300            46500
+## # ... with 4 more variables: salary_midcareer_75th <dbl>, salary_90 <dbl>,
+## #   salary_high <dbl>, salary_thousands <dbl>
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Sorting data in descending order}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{salary <-}\StringTok{ }\NormalTok{salary }\OperatorTok{%>%}\StringTok{ }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(salary_start_median))}
+
+\KeywordTok{head}\NormalTok{(salary, }\DecValTok{3}\NormalTok{) }\CommentTok{# highest to lowest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 9
+##   name  salary_start_me~ salary_midcaree~ salary_midcaree~ salary_midcaree~
+##   <chr>            <dbl>            <dbl>            <dbl>            <dbl>
+## 1 Cali~            75500           123000               NA           104000
+## 2 Mass~            72200           126000            76800            99200
+## 3 Harv~            71800           122000               NA            96000
+## # ... with 4 more variables: salary_midcareer_75th <dbl>, salary_90 <dbl>,
+## #   salary_high <dbl>, salary_thousands <dbl>
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Your turn:}
+
+Sort \texttt{rich.grads} to go from highest 90th percentile salary to
+lowest.
+
+\end{frame}
+
+\begin{frame}[fragile]{Solution:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rich.grads <-}\StringTok{ }\NormalTok{rich.grads }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{arrange}\NormalTok{(}\KeywordTok{desc}\NormalTok{(salary_90_thous))}
+
+\KeywordTok{head}\NormalTok{(rich.grads) }\CommentTok{# highest to lowest}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 6 x 2
+##   name                       salary_90_thous
+##   <chr>                                <dbl>
+## 1 Yale University                        326
+## 2 Dartmouth College                      321
+## 3 Harvard University                     288
+## 4 University of Pennsylvania             282
+## 5 Colgate University                     265
+## 6 Princeton University                   261
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Merging data}
+
+We can join data tables using a common identifier, in our case `name'
+(note the \emph{left} join).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df <-}\StringTok{ }\NormalTok{salary }\OperatorTok{%>%}\StringTok{ }\KeywordTok{left_join}\NormalTok{(region, }\DataTypeTok{by =} \StringTok{"name"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+After that, we will left join `type':
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }\KeywordTok{left_join}\NormalTok{(type, }\DataTypeTok{by =} \StringTok{"name"}\NormalTok{)}
+\KeywordTok{names}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "name"                    "salary_start_median"    
+## [3] "salary_midcareer_median" "salary_midcareer_10th"  
+## [5] "salary_midcareer_25th"   "salary_midcareer_75th"  
+## [7] "salary_midcareer_90th"   "region"                 
+## [9] "type"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Two merges in one line of code:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df <-}\StringTok{ }\NormalTok{salary }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{left_join}\NormalTok{(region, }\DataTypeTok{by =} \StringTok{"name"}\NormalTok{) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{left_join}\NormalTok{(type, }\DataTypeTok{by =} \StringTok{"name"}\NormalTok{)}
+
+\KeywordTok{names}\NormalTok{(df)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] "name"                    "salary_start_median"    
+## [3] "salary_midcareer_median" "salary_midcareer_10th"  
+## [5] "salary_midcareer_25th"   "salary_midcareer_75th"  
+## [7] "salary_midcareer_90th"   "region"                 
+## [9] "type"
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Group-wise operations}
+
+We can apply functions after using the group\_by() function. What's the
+new unit of analysis in this example?
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_region <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(region) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean_start =} \KeywordTok{mean}\NormalTok{(salary_start_median), }
+            \DataTypeTok{mean_mid =} \KeywordTok{mean}\NormalTok{(salary_midcareer_median))}
+
+\KeywordTok{head}\NormalTok{(df_region, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 3
+##   region       mean_start mean_mid
+##   <chr>             <dbl>    <dbl>
+## 1 California       51032.   93132.
+## 2 Midwestern       44225.   78180.
+## 3 Northeastern     48496    91352
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Your turn:}
+
+Create \texttt{df\_type} that is a data frame at the type-level and
+contains the average starting and mid career salaries by univeristy
+type.
+
+\end{frame}
+
+\begin{frame}[fragile]{Solution:}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{df_type <-}\StringTok{ }\NormalTok{df }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{group_by}\NormalTok{(type) }\OperatorTok{%>%}\StringTok{ }
+\StringTok{  }\KeywordTok{summarise}\NormalTok{(}\DataTypeTok{mean_start =} \KeywordTok{mean}\NormalTok{(salary_start_median), }
+            \DataTypeTok{mean_mid =} \KeywordTok{mean}\NormalTok{(salary_midcareer_median))}
+
+\KeywordTok{head}\NormalTok{(df_type, }\DecValTok{3}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## # A tibble: 3 x 3
+##   type        mean_start mean_mid
+##   <chr>            <dbl>    <dbl>
+## 1 <NA>            46885.   84106.
+## 2 Engineering     59411.  105128.
+## 3 Ivy League      60475   120125
+\end{verbatim}
+
+\end{frame}
+
+\begin{frame}[fragile]{Summary}
+
+class28.R contains an example of reshaping in \texttt{R} using another
+package, \texttt{tidyr}. Also check out the data-wrangling cheat sheet
+on TritonEd.
+
+Here are the commands/operators we covered today:
+
+\begin{columns}
+	\begin{column}{0.5\textwidth}
+		\begin{itemize}
+			\item \texttt{install.packages}
+			\item \texttt{library}
+			\item \texttt{mutate}
+			\item \texttt{rename}
+			\item \texttt{filter}
+			\item \texttt{distinct}
+			\item \texttt{select}
+			\item \texttt{transmute}
+		\end{itemize}
+	\end{column}
+	\begin{column}{0.5\textwidth}
+		\begin{itemize}
+			\item \texttt{arrange}
+			\item \texttt{desc}
+			\item \texttt{left\_join}
+			\item \texttt{group\_by}
+			\item \texttt{summarise}
+			\item \texttt{everything}
+			\item \texttt{gather}
+			\item \texttt{spread}
+		\end{itemize}
+	\end{column}
+\end{columns}
+
+\end{frame}
+
+\end{document}
